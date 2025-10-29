@@ -1,3 +1,169 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8474b1fa2d747e581ee02f9b87c493a1c5502bef7993e21506cc8cfad2a830b8
-size 4839
+version: "3.8"
+
+services:
+  # --- ZOOKEEPER ---
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- KAFKA  ---
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- MONGODB (persistent) ---
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - /opt/mongo_data:/data/db   # host-mounted persistent storage
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    networks:
+      - shareprinto-network
+
+  # --- MONGO EXPRESS (optional) ---
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8084:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
+    networks:
+      - shareprinto-network
+
+  # --- AUTHENTICATION SERVICE ---
+  auth-service:
+    build: 
+      context: ./backend/shareprinto-authentification-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MONGODB_URI: mongodb://root:rootpassword@mongo:27017/shareprinto?authSource=admin
+      MONGODB_DATABASE: shareprinto
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_CONSUMER_GROUP_ID: shareprinto-auth
+      JWT_SECRET: ${JWT_SECRET:-mySecretKey123456789012345678901234567890}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:9002,http://localhost:3000,http://localhost:3003}
+    depends_on:
+      - kafka
+      - mongo
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- ORDERS SERVICE ---
+  orders-service:
+    build: 
+      context: ./backend/shareprinto-orders-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MONGODB_URI: mongodb://root:rootpassword@mongo:27017/shareprinto?authSource=admin
+      MONGODB_DATABASE: shareprinto
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_CONSUMER_GROUP_ID: sharePrinto
+      SECURITY_USER_NAME: ${SECURITY_USER_NAME:-admin}
+      SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD:-admin}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:9002,http://localhost:3000,http://localhost:3003}
+    depends_on:
+      - kafka
+      - mongo
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- ORCHESTRATOR SERVICE ---
+  orchestrator-service:
+    build: 
+      context: ./backend/shareprinto-orchestraor-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_CONSUMER_GROUP_ID: sharePrinto
+      KAFKA_TOPIC_USER_LOGIN: User-login-topic
+      KAFKA_TOPIC_ORDER_EVENTS: order-events
+    depends_on:
+      - kafka
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- MAIN FRONTEND ---
+  frontend:
+    build: 
+      context: ./forntend
+      dockerfile: Dockerfile
+    ports:
+      - "9002:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_AUTH_URL: http://auth-service:3000
+      NEXT_PUBLIC_API_ORDERS_URL: http://orders-service:8081
+      NEXT_PUBLIC_API_ORCH_URL: http://orchestrator-service:8085
+    depends_on:
+      - auth-service
+      - orders-service
+      - orchestrator-service
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+  # --- ADMIN FRONTEND ---
+  frontend-admin:
+    build: 
+      context: ./frontend-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_AUTH_URL: http://auth-service:3000
+      NEXT_PUBLIC_API_ORDERS_URL: http://orders-service:8081
+      NEXT_PUBLIC_API_ORCH_URL: http://orchestrator-service:8085
+    depends_on:
+      - auth-service
+      - orders-service
+      - orchestrator-service
+    restart: unless-stopped
+    networks:
+      - shareprinto-network
+
+networks:
+  shareprinto-network:
+    driver: bridge
