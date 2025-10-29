@@ -1,3 +1,349 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b88e69b5a120af17dc55f633d81bc5738ffb10581924fa3847be154c41929fbc
-size 4631
+# SharePrinto Project .gitignore
+# Node.js
+node_modules/
+.next/
+out/
+dist/
+
+# ===========================================
+# Operating System Files
+# ===========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ===========================================
+# IDE and Editor Files
+# ===========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ===========================================
+# Node.js / Next.js Frontend
+# ===========================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next/
+out/
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# ===========================================
+# Java / Kotlin / Spring Boot Backend
+# ===========================================
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# Gradle
+.gradle
+build/
+gradle/
+gradlew
+gradlew.bat
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===========================================
+# Docker
+# ===========================================
+# Docker volumes and data
+docker-data/
+mongo_data/
+postgres_data/
+
+# Docker compose override files
+docker-compose.override.yml
+docker-compose.local.yml
+
+# ===========================================
+# Database
+# ===========================================
+# MongoDB
+*.db
+*.db-journal
+
+# SQLite
+*.sqlite
+*.sqlite3
+
+# ===========================================
+# Logs
+# ===========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===========================================
+# Environment and Configuration
+# ===========================================
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Configuration files with sensitive data
+config/local.json
+config/production.json
+config/development.json
+
+# ===========================================
+# Build and Distribution
+# ===========================================
+# Build outputs
+build/
+dist/
+out/
+
+# ===========================================
+# Testing
+# ===========================================
+# Test results
+test-results/
+coverage/
+.nyc_output/
+
+# Jest
+jest.config.js
+
+# ===========================================
+# Miscellaneous
+# ===========================================
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archive files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ===========================================
+# Project Specific
+# ===========================================
+# Deployment artifacts
+deploy/
+*.jar
+*.war
+
+# Local development files
+local/
+dev/
+
+# IDE specific files
+*.iml
+*.ipr
+*.iws
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ===========================================
+# Security and Secrets
+# ===========================================
+# Never commit these
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+.secrets/
+
+# ===========================================
+# Monitoring and Analytics
+# ===========================================
+# Application monitoring
+monitoring/
+metrics/
+
+# ===========================================
+# Documentation Build
+# ===========================================
+# Generated documentation
+docs/_build/
+docs/build/
+
+
+# Node.js
+node_modules/
+.next/
+dist/
+build/
+npm-debug.log
+yarn-error.log
+
+# Java
+target/
+*.class
+*.jar
+!src/**
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker
+*.pid
+*.log
+docker-compose.override.yml
+
+# IDE / Editor
+.idea/
+.vscode/
+*.iml
+
+# System
+.DS_Store
+Thumbs.db
+
+# LFS cache
+.git/lfs/

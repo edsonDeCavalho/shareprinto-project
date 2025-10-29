@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:097f159963cbe90dfb491003c3765130062ecf5fe92f87525543c7bbe02a9e5b
-size 845
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # trigger on pushes to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy project to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "."
+          target: "~/home/ubuntu/projects"
+
+      - name: SSH and redeploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/home/ubuntu/projects
+            docker compose down
+            docker compose up -d --build
