@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # trigger  on pushes to main branch
+      - main
 
 jobs:
   deploy:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: Copy project to server
         uses: appleboy/scp-action@v0.1.7
@@ -22,7 +20,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "."
-          target: "~/home/ubuntu/projects"
+          target: "~/projects/shareprinto"
 
       - name: SSH and redeploy
         uses: appleboy/ssh-action@v1.2.0
@@ -31,6 +29,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/home/ubuntu/projects
+            cd ~/projects/shareprinto
             docker compose down
             docker compose up -d --build
