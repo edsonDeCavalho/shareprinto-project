@@ -1,9 +1,9 @@
-# Track only large or binary files with Git LFS
-*.mp4 filter=lfs diff=lfs merge=lfs -text
+# Track only real large/binary files with LFS — not code or configs
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
-*.jar filter=lfs diff=lfs merge=lfs -text
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.kt !text !filter !merge !diff
