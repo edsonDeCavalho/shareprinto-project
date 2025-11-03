@@ -1,3 +1,74 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d9e368e6bd05c2167840299cc44889b4b551cb6c9d2481dc1318202667df2bd2
-size 1320
+# ============================================================
+# 🧩 SharePrinto Orchestrator Service
+# Version: 1.0.0
+# Maintainer: Edson de Carvalho <your@email.com>
+# Description: Spring Boot Orchestrator Service built with Gradle and OpenJDK 17
+# ============================================================
+
+# 1️⃣ Build stage
+FROM openjdk:17-jdk-slim AS builder
+
+LABEL version="1.0.0" \
+      maintainer="Edson de Carvalho <your@email.com>" \
+      service="orchestrator-service" \
+      description="Build stage for SharePrinto orchestrator backend using Gradle and OpenJDK 17."
+
+# Set working directory
+WORKDIR /app
+
+# Copy Gradle wrapper and configuration files
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle.kts .
+COPY settings.gradle.kts .
+
+# Copy source code
+COPY src src
+
+# Make Gradle wrapper executable
+RUN chmod +x ./gradlew
+
+# Build the application (skip tests for faster builds)
+RUN ./gradlew build -x test
+
+# 2️⃣ Runtime stage
+FROM openjdk:17-jre-slim
+
+LABEL version="1.0.0" \
+      maintainer="Edson de Carvalho <your@email.com>" \
+      service="orchestrator-service" \
+      description="Runtime stage for SharePrinto orchestrator backend."
+
+# Install curl for health checks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Create a non-root user for security
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# Copy the built JAR file from builder stage
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+# Change ownership to appuser
+RUN chown appuser:appuser app.jar
+
+# Switch to non-root user
+USER appuser
+
+# Expose the port the orchestrator service runs on
+EXPOSE 8085
+
+# JVM options for production
+ENV JAVA_OPTS="-Xmx512m -Xms256m -Djava.security.egd=file:/dev/./urandom"
+
+# Set Spring profile for Docker
+ENV SPRING_PROFILES_ACTIVE=docker
+
+# Health check for the orchestrator service
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8085/actuator/health || exit 1
+
+# Run the Spring Boot application
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
