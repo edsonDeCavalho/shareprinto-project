@@ -44,7 +44,7 @@ services:
     networks:
       - shareprinto-network
 
-  # --- MONGO EXPRESS (optional) ---
+  # --- MONGO EXPRESS (optional)  ---
   mongo-express:
     image: mongo-express
     restart: unless-stopped
