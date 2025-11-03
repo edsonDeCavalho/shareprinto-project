@@ -6,14 +6,13 @@
 # ============================================================
 
 # 1️⃣ Build stage
-FROM openjdk:17-jdk-slim AS builder
+FROM eclipse-temurin:17-jdk-jammy AS builder
 
 LABEL version="1.0.0" \
       maintainer="Edson de Carvalho <your@email.com>" \
       service="auth-service" \
       description="Build stage for SharePrinto authentication backend using Gradle and OpenJDK 17."
 
-# Set working directory
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
@@ -32,7 +31,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew build -x test
 
 # 2️⃣ Runtime stage
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-jammy
 
 LABEL version="1.0.0" \
       maintainer="Edson de Carvalho <your@email.com>" \
@@ -42,19 +41,18 @@ LABEL version="1.0.0" \
 # Install curl for health checks
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
 # Create a non-root user for security
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
-# Copy the JAR file from the builder stage
+# Copy the built JAR from the builder stage
 COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Change ownership to the non-root user
 RUN chown appuser:appuser app.jar
 
-# Switch to the non-root user
+# Switch to non-root user
 USER appuser
 
 # Expose the port that the auth service listens on (matches docker-compose)
