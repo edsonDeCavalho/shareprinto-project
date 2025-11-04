@@ -140,7 +140,6 @@ temp/
 .mtj.tmp/
 
 # Package Files
-*.jar
 *.war
 *.nar
 *.ear
@@ -167,7 +166,7 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
+#.mvn/wrapper/maven-wrapper.jar
 
 # ===========================================
 # Docker
@@ -247,7 +246,7 @@ jest.config.js
 *.dmg
 *.gz
 *.iso
-*.jar
+
 *.rar
 *.tar
 *.zip
@@ -257,7 +256,7 @@ jest.config.js
 # ===========================================
 # Deployment artifacts
 deploy/
-*.jar
+
 *.war
 
 # Local development files
@@ -321,7 +320,7 @@ yarn-error.log
 # Java
 target/
 *.class
-*.jar
+
 !src/**
 
 # Environment files
