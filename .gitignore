@@ -153,11 +153,9 @@ hs_err_pid*
 replay_pid*
 
 # Gradle
-.gradle
+
 build/
-gradle/
-gradlew
-gradlew.bat
+
 
 # Maven
 target/
