@@ -23,7 +23,7 @@
     COPY --from=deps /app/node_modules ./node_modules
     
     # ✅ Copy full app source
-    COPY ./frontend-admin ./
+    COPY . .
     
     # Disable Next.js telemetry during build
     ENV NEXT_TELEMETRY_DISABLED=1
