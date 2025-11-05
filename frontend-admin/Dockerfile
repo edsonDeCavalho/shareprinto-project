@@ -10,7 +10,7 @@
     WORKDIR /app
     
     # ✅ Copy only from the correct folder (avoid grabbing root package.json)
-    COPY ./frontend-admin/package*.json ./
+    COPY package*.json ./
     
     # Install only production dependencies for faster builds
     RUN npm ci --omit=dev
