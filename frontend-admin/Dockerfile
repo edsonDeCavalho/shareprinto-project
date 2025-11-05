@@ -11,7 +11,7 @@
     
     # Copy and install dependencies (optimized for CI/CD)
     COPY package.json package-lock.json* ./
-    RUN npm ci --only=production
+    RUN npm install --production
     
     # --- Build stage ---
     FROM base AS builder
