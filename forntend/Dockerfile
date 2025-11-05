@@ -16,7 +16,8 @@ WORKDIR /app
 # 2️⃣ Dependencies stage
 FROM base AS deps
 COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev
+RUN npm ci --only=production
+
 
 # 3️⃣ Build stage
 FROM base AS builder
