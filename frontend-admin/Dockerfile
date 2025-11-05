@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Version 1.0.0 - Dockerfile for SharePrinto Admin Frontend
+# Version 1.0.1 - Dockerfile for SharePrinto Admin Frontend
 
 # --- Base image ---
     FROM node:18-alpine AS base
@@ -9,20 +9,24 @@
     RUN apk add --no-cache libc6-compat
     WORKDIR /app
     
-    # Copy and install dependencies (optimized for CI/CD)
-    COPY package.json package-lock.json* ./
-    RUN npm install --production
+    # ✅ Copy only from the correct folder (avoid grabbing root package.json)
+    COPY ./frontend-admin/package*.json ./
+    
+    # Install only production dependencies for faster builds
+    RUN npm ci --omit=dev
     
     # --- Build stage ---
     FROM base AS builder
     WORKDIR /app
     
-    # Copy node_modules from deps and app source
+    # Copy dependencies from deps
     COPY --from=deps /app/node_modules ./node_modules
-    COPY . .
+    
+    # ✅ Copy full app source
+    COPY ./frontend-admin ./
     
     # Disable Next.js telemetry during build
-    ENV NEXT_TELEMETRY_DISABLED 1
+    ENV NEXT_TELEMETRY_DISABLED=1
     
     # Build the Next.js app
     RUN npm run build
@@ -49,7 +53,7 @@
     
     USER nextjs
     
-    # Expose the correct port (matches docker-compose.yml)
+    # Expose the app port
     EXPOSE 3003
     
     # Start the Next.js standalone server
