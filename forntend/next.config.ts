@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b94851d3b617a1fe5f702bf7c79ca4e64022f69141af84042382b4cf383f5a87
-size 849
+import type {NextConfig} from 'next';
+
+const nextConfig: NextConfig = {
+  /* config options here */
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/auth/:path*',
+        destination: 'http://51.178.142.95:3000/auth/:path*',
+      },
+      {
+        source: '/api/user-status/:path*',
+        destination: 'http://localhost:3004/api/user-status/:path*',
+      },
+      {
+        source: '/api/order-management/:path*',
+        destination: 'http://localhost:3004/api/order-management/:path*',
+      },
+    ];
+  },
+};
+
+export default nextConfig;

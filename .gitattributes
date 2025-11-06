@@ -10,4 +10,22 @@
 # Explicitly exclude package.json files from LFS
 package.json -filter -diff -merge
 package-lock.json -filter -diff -merge
+# Explicitly exclude config files from LFS
+*.config.ts -filter -diff -merge
+*.config.mjs -filter -diff -merge
+*.config.js -filter -diff -merge
+next.config.* -filter -diff -merge
+postcss.config.* -filter -diff -merge
+tailwind.config.* -filter -diff -merge
+eslint.config.* -filter -diff -merge
+tsconfig.json -filter -diff -merge
+# Explicitly exclude all code files from LFS
+*.ts -filter -diff -merge
+*.tsx -filter -diff -merge
+*.js -filter -diff -merge
+*.jsx -filter -diff -merge
+*.mjs -filter -diff -merge
+*.cjs -filter -diff -merge
+*.json -filter -diff -merge
+*.d.ts -filter -diff -merge
 *.kt !text !filter !merge !diff
