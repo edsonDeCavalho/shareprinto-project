@@ -29,4 +29,7 @@ tsconfig.json -filter -diff -merge
 *.json -filter -diff -merge
 *.d.ts -filter -diff -merge
 *.ico -filter -diff -merge
+*.css -filter -diff -merge
+*.scss -filter -diff -merge
+*.sass -filter -diff -merge
 *.kt !text !filter !merge !diff
