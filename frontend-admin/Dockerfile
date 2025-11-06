@@ -12,8 +12,8 @@
     # ✅ Copy only from the correct folder (avoid grabbing root package.json)
     COPY package*.json ./
     
-    # Install only production dependencies for faster builds
-    RUN npm ci --omit=dev
+    # Install all dependencies (including dev) needed for building
+    RUN npm ci
     
     # --- Build stage ---
     FROM base AS builder
