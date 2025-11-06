@@ -1,3 +1,42 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b4979c8f2f1c31b375dca4cf7d11165db36e5beffb2425a728314065f5db4582
-size 1295
+{
+  "prusa_research_printers": [
+    {
+      "model": "Original Prusa i3 MK3S+",
+      "build_volume": "250x210x210mm",
+      "multi_color": false,
+      "notes": "Flagship FDM printer, manual filament swap possible"
+    },
+    {
+      "model": "Original Prusa i3 MK4",
+      "build_volume": "250x210x220mm",
+      "multi_color": true,
+      "notes": "Supports multi-material upgrade (MMU3)"
+    },
+    {
+      "model": "Original Prusa XL",
+      "build_volume": "360x360x360mm",
+      "multi_color": true,
+      "notes": "5-toolhead version for true multi-color/multi-material"
+    },
+    {
+      "model": "Original Prusa MINI+",
+      "build_volume": "180x180x180mm",
+      "multi_color": false,
+      "notes": "Compact printer, no official multi-color support"
+    },
+    {
+      "model": "Original Prusa SL1/SL1S",
+      "build_volume": "120x68x150mm",
+      "multi_color": false,
+      "notes": "Resin printer (SLA), single material only"
+    }
+  ],
+  "multi_color_notes": {
+    "official_solutions": {
+      "MMU2S": "Compatible with MK3S+ (not recommended for beginners)",
+      "MMU3": "Designed for MK4 (improved reliability)",
+      "XL Toolchanger": "Native 2-5 material support"
+    },
+    "third_party_options": "All FDM models can use manual filament swaps or Mosaic Palette"
+  }
+}

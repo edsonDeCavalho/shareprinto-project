@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3b936e84cce9dcf49dfd34946f86b0292f5a8cb21b71038343d474ff93f4aacf
-size 452
+
+'use server';
+// This file is kept for type definitions but the server-side logic is currently bypassed.
+
+import type { EstimatePrintParametersOutput } from '@/ai/flows/estimate-print-parameters';
+
+export type EstimationResult = {
+  fileName: string;
+  output?: EstimatePrintParametersOutput;
+  error?: string;
+};
+
+// The getEstimation function has been removed to bypass server-side processing for now.
+// The form now uses a client-side simulation.

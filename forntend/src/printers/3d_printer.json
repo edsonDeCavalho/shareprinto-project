@@ -1,3 +1,66 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:03d1b147e28a2e7a47fad82e8dcb423fe1b0e36af21084bd9f2afa604a7bebeb
-size 1145
+{
+  "3d_printer_brands": {
+    "consumer_prosumer": [
+      "Creality",
+      "Prusa Research",
+      "Bambu Lab",
+      "Anycubic",
+      "Elegoo",
+      "FlashForge",
+      "Ultimaker",
+      "LulzBot",
+      "Qidi Tech",
+      "Sovol"
+    ],
+    "industrial_professional": [
+      "Stratasys",
+      "3D Systems",
+      "Markforged",
+      "Formlabs",
+      "HP",
+      "Carbon",
+      "Desktop Metal",
+      "Voxeljet",
+      "EOS",
+      "Renishaw"
+    ],
+    "resin_printers": [
+      "Anycubic",
+      "Elegoo",
+      "Phrozen",
+      "Formlabs",
+      "Peopoly",
+      "Nova3D",
+      "Uniz"
+    ],
+    "budget_entry_level": [
+      "Creality",
+      "Kingroon",
+      "Artillery",
+      "Voxelab"
+    ],
+    "specialty_open_source": [
+      "Prusa Research",
+      "LulzBot",
+      "Rat Rig",
+      "Voron"
+    ],
+    "high_speed_innovative": [
+      "Bambu Lab",
+      "AnkerMake",
+      "Snapmaker"
+    ],
+    "metal_printers": [
+      "Desktop Metal",
+      "Markforged",
+      "EOS",
+      "SLM Solutions",
+      "Trumpf"
+    ],
+    "notable_closed_discontinued": [
+      "MakerBot",
+      "Zortrax",
+      "XYZprinting"
+    ]
+  }
+}

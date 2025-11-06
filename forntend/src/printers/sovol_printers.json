@@ -1,3 +1,66 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0b73affe6a714f2114e929555f5d4b054412b7460c4ecbefd0841362e60b9149
-size 1838
+{
+  "sovol_printers": [
+    {
+      "model": "SV06",
+      "build_volume": "220x220x250mm",
+      "multi_color": false,
+      "notes": "Prusa i3 clone, direct drive, auto-bed leveling"
+    },
+    {
+      "model": "SV06 Plus",
+      "build_volume": "280x280x340mm",
+      "multi_color": false,
+      "notes": "Larger version of SV06, dual Z-axis"
+    },
+    {
+      "model": "SV07",
+      "build_volume": "220x220x250mm",
+      "multi_color": false,
+      "notes": "Klipper-powered, high-speed printing"
+    },
+    {
+      "model": "SV07 Plus",
+      "build_volume": "280x280x340mm",
+      "multi_color": false,
+      "notes": "Large-format Klipper printer"
+    },
+    {
+      "model": "SV01",
+      "build_volume": "280x240x300mm",
+      "multi_color": false,
+      "notes": "Direct drive, dual-gear extruder"
+    },
+    {
+      "model": "SV01 Pro",
+      "build_volume": "280x240x300mm",
+      "multi_color": false,
+      "notes": "Upgraded SV01 with silent board"
+    },
+    {
+      "model": "SV04",
+      "build_volume": "280x240x300mm",
+      "multi_color": true,
+      "notes": "IDEX (Independent Dual Extruder) for true multi-material/color"
+    },
+    {
+      "model": "SV05",
+      "build_volume": "220x220x250mm",
+      "multi_color": false,
+      "notes": "Budget-friendly, single extruder"
+    }
+  ],
+  "multi_color_notes": {
+    "official_support": {
+      "only_model": "SV04 (IDEX system)",
+      "capability": "True dual-material/color printing without purging"
+    },
+    "limitations": {
+      "no_ams": "No automatic material switching like Bambu Lab",
+      "other_models": "Single extruder only (manual filament swaps possible)"
+    },
+    "idex_advantage": {
+      "sv04": "Can print two colors/materials simultaneously (no oozing)"
+    },
+    "resin_printers": "Sovol does not currently produce resin printers"
+  }
+}

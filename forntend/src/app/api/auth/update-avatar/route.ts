@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e6ef9d941ca9c259d1a74d54dae5410823d05da51370968eed6fd11db24e67c
-size 744
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Forward the request to the Spring Boot backend
+    const response = await fetch('http://51.178.142.95:3000/auth/update-avatar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Update avatar API error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+

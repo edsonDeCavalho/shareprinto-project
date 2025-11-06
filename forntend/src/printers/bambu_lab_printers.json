@@ -1,3 +1,58 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8fe39b8326245717d4e7d9ac938bbf5be811fce957af92f8f1cb2ce8b199f727
-size 1658
+{
+  "bambu_lab_printers": [
+    {
+      "model": "X1 Carbon",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Flagship CoreXY, supports AMS (up to 4 colors), hardened steel extruder"
+    },
+    {
+      "model": "X1",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Same as X1 Carbon but without hardened extruder, supports AMS"
+    },
+    {
+      "model": "P1P",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Prosumer model, AMS-compatible (sold separately)"
+    },
+    {
+      "model": "P1S",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Enclosed version of P1P with AMS support"
+    },
+    {
+      "model": "A1",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Entry-level model, supports AMS Lite (up to 4 colors)"
+    },
+    {
+      "model": "A1 mini",
+      "build_volume": "180x180x180mm",
+      "multi_color": true,
+      "notes": "Compact version, supports AMS Lite (up to 4 colors)"
+    },
+    {
+      "model": "X1E",
+      "build_volume": "256x256x256mm",
+      "multi_color": true,
+      "notes": "Industrial-grade X1 variant, supports AMS"
+    }
+  ],
+  "multi_color_notes": {
+    "ams_support": {
+      "standard_ams": "Supports up to 4 colors/materials (16 with multiple AMS units)",
+      "ams_lite": "Lightweight version for A1 series",
+      "multi_ams": "Can chain up to 4 AMS units for 16-color printing"
+    },
+    "unique_features": [
+      "Automatic filament switching",
+      "Waste reduction algorithms",
+      "Full integration with Bambu Studio"
+    ]
+  }
+}

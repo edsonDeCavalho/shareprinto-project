@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8ade6bf0924a53718a9f1c6e9280be3b09baf2eec12e0b931f1d6fce34ec063f
-size 756
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Forward the request to the Spring Boot backend
+    const response = await fetch('http://51.178.142.95:3000/auth/update-digital-code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Update digital code API error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+

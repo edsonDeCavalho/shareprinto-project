@@ -1,3 +1,67 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7be67e031ed311ef12bb4eaef5490ee556fc7138660a5b601872374263aad589
-size 1974
+{
+  "qidi_tech_printers": [
+    {
+      "model": "X-Max 3",
+      "build_volume": "325x325x315mm",
+      "multi_color": true,
+      "notes": "CoreXY, supports dual-material printing with optional external MMU"
+    },
+    {
+      "model": "X-Smart 3",
+      "build_volume": "260x260x260mm",
+      "multi_color": false,
+      "notes": "Compact CoreXY, high-speed printing"
+    },
+    {
+      "model": "X-Plus 3",
+      "build_volume": "270x270x240mm",
+      "multi_color": true,
+      "notes": "Dual-extruder capable, enclosed chamber"
+    },
+    {
+      "model": "X-CF Pro",
+      "build_volume": "250x250x200mm",
+      "multi_color": false,
+      "notes": "Industrial-grade for carbon fiber/composites"
+    },
+    {
+      "model": "i-Fast",
+      "build_volume": "250x250x250mm",
+      "multi_color": false,
+      "notes": "High-speed industrial printer (600mm/s)"
+    },
+    {
+      "model": "X-Pro",
+      "build_volume": "230x150x150mm",
+      "multi_color": false,
+      "notes": "Budget-friendly enclosed printer"
+    },
+    {
+      "model": "Shadow 5.5S",
+      "build_volume": "256x256x256mm",
+      "multi_color": false,
+      "notes": "Resin printer (DLP), 5.5\" 4K screen"
+    },
+    {
+      "model": "Shadow 8.9S",
+      "build_volume": "192x120x200mm",
+      "multi_color": false,
+      "notes": "Large-format resin printer, 8.9\" 4K"
+    }
+  ],
+  "multi_color_notes": {
+    "official_support": {
+      "x-max_3": "Optional external multi-material unit (not integrated)",
+      "x-plus_3": "Dual-extruder configuration possible"
+    },
+    "limitations": {
+      "no_native_ams": "No automatic material switching like Bambu Lab",
+      "manual_process": "Material changes require manual intervention on most models"
+    },
+    "industrial_focus": {
+      "strengths": "High-temperature materials, engineering plastics",
+      "weakness": "Multi-color not a primary design focus"
+    },
+    "resin_printers": "All Qidi resin models are single-material only"
+  }
+}

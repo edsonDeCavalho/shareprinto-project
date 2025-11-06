@@ -1,3 +1,91 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bd372a4d6f84826a752bde6233e68083063a034bc97455a27a0c7d2884e1b2a9
-size 2504
+{
+  "anycubic_printers": {
+    "FDM_printers": [
+      {
+        "model": "Kobra",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Entry-level, auto-leveling, direct drive"
+      },
+      {
+        "model": "Kobra 2",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Upgraded Kobra with higher speed"
+      },
+      {
+        "model": "Kobra 2 Pro",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "High-speed (250mm/s), linear rails"
+      },
+      {
+        "model": "Kobra 2 Max",
+        "build_volume": "300x300x320mm",
+        "multi_color": false,
+        "notes": "Large-format version of Kobra 2"
+      },
+      {
+        "model": "Kobra 2 Neo",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Budget version of Kobra 2"
+      },
+      {
+        "model": "Vyper",
+        "build_volume": "245x245x260mm",
+        "multi_color": false,
+        "notes": "Auto-leveling, direct drive"
+      },
+      {
+        "model": "Chiron",
+        "build_volume": "400x400x450mm",
+        "multi_color": false,
+        "notes": "XL-format printer"
+      },
+      {
+        "model": "Mega S",
+        "build_volume": "210x210x205mm",
+        "multi_color": false,
+        "notes": "Classic Anycubic workhorse"
+      }
+    ],
+    "resin_printers": [
+      {
+        "model": "Photon Mono 2",
+        "build_volume": "143x89x175mm",
+        "multi_color": false,
+        "notes": "6.6\" 2K LCD"
+      },
+      {
+        "model": "Photon Mono 4K",
+        "build_volume": "132x80x165mm",
+        "multi_color": false,
+        "notes": "6.08\" 4K LCD"
+      },
+      {
+        "model": "Photon Mono X",
+        "build_volume": "192x120x245mm",
+        "multi_color": false,
+        "notes": "8.9\" 4K LCD"
+      },
+      {
+        "model": "Photon M3",
+        "build_volume": "130x80x160mm",
+        "multi_color": false,
+        "notes": "Budget resin printer"
+      },
+      {
+        "model": "Photon Ultra",
+        "build_volume": "82x130x160mm",
+        "multi_color": false,
+        "notes": "DLP technology"
+      }
+    ],
+    "multi_color_notes": {
+      "official_support": "None of Anycubic printers natively support multi-color printing",
+      "workarounds": "Manual filament swaps or third-party solutions like Mosaic Palette can be used on FDM models",
+      "resin_limitation": "All resin printers are single-material only"
+    }
+  }
+}

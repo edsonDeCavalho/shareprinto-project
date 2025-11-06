@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:43d72dd3f2e50f7d908ec889ab755b59cc4d1bf2d4a029adf417524ad8fa2dba
-size 734
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Forward the request to the Spring Boot backend
+    const response = await fetch('http://51.178.142.95:3000/auth/send-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Send OTP API error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+

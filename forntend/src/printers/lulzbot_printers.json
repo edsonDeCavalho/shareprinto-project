@@ -1,3 +1,63 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de83fffe2f240e78c376826b963961986570d077aa02cd2a009e2fdcb93fd05b
-size 1857
+{
+  "lulzbot_printers": [
+    {
+      "model": "LulzBot TAZ Pro",
+      "build_volume": "280x280x285mm",
+      "multi_color": false,
+      "notes": "Industrial-grade, toolhead swapping capability"
+    },
+    {
+      "model": "LulzBot TAZ Workhorse",
+      "build_volume": "280x280x250mm",
+      "multi_color": false,
+      "notes": "Reliable workhorse with dual extruder option"
+    },
+    {
+      "model": "LulzBot Mini 2",
+      "build_volume": "152x152x158mm",
+      "multi_color": false,
+      "notes": "Compact open-source printer"
+    },
+    {
+      "model": "LulzBot Sidekick 289",
+      "build_volume": "157x157x157mm",
+      "multi_color": false,
+      "notes": "Modular design with quick-swap toolheads"
+    },
+    {
+      "model": "LulzBot Sidekick 747",
+      "build_volume": "269x269x249mm",
+      "multi_color": false,
+      "notes": "Larger version with same modular system"
+    },
+    {
+      "model": "LulzBot TAZ 6",
+      "build_volume": "280x280x250mm",
+      "multi_color": true,
+      "notes": "Dual extruder option for two-color printing (Aerostruder)"
+    },
+    {
+      "model": "LulzBot TAZ 5",
+      "build_volume": "298x275x250mm",
+      "multi_color": true,
+      "notes": "Legacy model with dual extruder capability"
+    }
+  ],
+  "multi_color_notes": {
+    "official_support": "Only TAZ 5/6 support multi-color via dual extruders",
+    "technology": "Dual-extrusion (not automatic switching)",
+    "limitations": {
+      "no_ams": "No automatic material switching system",
+      "manual_process": "Color changes require manual intervention"
+    },
+    "open_source": {
+      "advantage": "Can modify for multi-extrusion setups",
+      "community": "Active user modifications for multi-color"
+    },
+    "toolhead_options": [
+      "Aerostruder (single)",
+      "Dual Aerostruder",
+      "MOARstruder (large nozzle)"
+    ]
+  }
+}

@@ -1,3 +1,123 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:64df7259f0502563dbe7635a23894760ec47272150ec0282bd56da45b54f604c
-size 3431
+{
+  "creality_printers": {
+    "FDM_printers": [
+      {
+        "model": "Ender 3",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Classic budget printer"
+      },
+      {
+        "model": "Ender 3 V2",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Upgraded Ender 3 with display"
+      },
+      {
+        "model": "Ender 3 V3 SE",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "High-speed with auto-leveling"
+      },
+      {
+        "model": "Ender 3 S1",
+        "build_volume": "220x220x270mm",
+        "multi_color": false,
+        "notes": "Direct drive extruder"
+      },
+      {
+        "model": "Ender 3 S1 Pro",
+        "build_volume": "220x220x270mm",
+        "multi_color": false,
+        "notes": "Upgraded S1 with all-metal hotend"
+      },
+      {
+        "model": "Ender 3 Max",
+        "build_volume": "300x300x320mm",
+        "multi_color": false,
+        "notes": "Large-format Ender 3 variant"
+      },
+      {
+        "model": "Ender 5",
+        "build_volume": "220x220x300mm",
+        "multi_color": false,
+        "notes": "Cube-style frame design"
+      },
+      {
+        "model": "Ender 5 Plus",
+        "build_volume": "350x350x400mm",
+        "multi_color": false,
+        "notes": "Extra large build volume"
+      },
+      {
+        "model": "Ender 5 S1",
+        "build_volume": "220x220x280mm",
+        "multi_color": false,
+        "notes": "Direct drive, dual Z-axis"
+      },
+      {
+        "model": "CR-6 SE",
+        "build_volume": "235x235x250mm",
+        "multi_color": false,
+        "notes": "Community-developed model"
+      },
+      {
+        "model": "CR-10",
+        "build_volume": "300x300x400mm",
+        "multi_color": false,
+        "notes": "Original large-format Creality"
+      },
+      {
+        "model": "CR-10 Smart",
+        "build_volume": "300x300x400mm",
+        "multi_color": false,
+        "notes": "Wi-Fi connected version"
+      },
+      {
+        "model": "CR-10 V3",
+        "build_volume": "300x300x400mm",
+        "multi_color": false,
+        "notes": "Direct drive extruder"
+      },
+      {
+        "model": "CR-10 Smart Pro",
+        "build_volume": "300x300x400mm",
+        "multi_color": false,
+        "notes": "Upgraded Smart version"
+      },
+      {
+        "model": "K1",
+        "build_volume": "220x220x250mm",
+        "multi_color": true,
+        "notes": "CoreXY, high-speed, optional multi-color via AMS"
+      },
+      {
+        "model": "K1 Max",
+        "build_volume": "300x300x300mm",
+        "multi_color": true,
+        "notes": "Larger version of K1 with multi-color support"
+      }
+    ],
+    "resin_printers": [
+      {
+        "model": "Halot-One",
+        "build_volume": "127x80x160mm",
+        "multi_color": false,
+        "notes": "Entry-level LCD resin printer"
+      },
+      {
+        "model": "Halot-Mage",
+        "build_volume": "218x123x250mm",
+        "multi_color": false,
+        "notes": "8.9 4K resin printer"
+      },
+      {
+        "model": "Halot-Sky",
+        "build_volume": "219x123x230mm",
+        "multi_color": false,
+        "notes": "Large-format resin printer"
+      }
+    ],
+    "multi_color_note": "Only K1 and K1 Max natively support multi-color printing (via optional Creality AMS system). Other models require manual filament changes or third-party modifications."
+  }
+}

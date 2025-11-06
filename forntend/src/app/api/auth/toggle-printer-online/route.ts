@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cd283a681a71b117d91a34e590c75e1945e0318e2f23485abcbb3e3a0375b639
-size 760
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Forward the request to the Spring Boot backend
+    const response = await fetch('http://51.178.142.95:3000/auth/toggle-printer-online', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Toggle printer online API error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+

@@ -1,3 +1,56 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2c777e9a01ac5f8a26898d532a1689e24eac235124845c716919819325eeddaf
-size 1781
+{
+  "ultimaker_printers": [
+    {
+      "model": "Ultimaker S3",
+      "build_volume": "230x190x200mm",
+      "multi_color": true,
+      "notes": "Dual-extrusion, supports PVA breakaway support material"
+    },
+    {
+      "model": "Ultimaker S5",
+      "build_volume": "330x240x300mm",
+      "multi_color": true,
+      "notes": "Dual-extrusion (upgradeable to Material Station for 6 materials)"
+    },
+    {
+      "model": "Ultimaker S7",
+      "build_volume": "330x240x300mm",
+      "multi_color": true,
+      "notes": "Successor to S5 with improved air manager and build plate"
+    },
+    {
+      "model": "Ultimaker 2+",
+      "build_volume": "223x223x205mm",
+      "multi_color": false,
+      "notes": "Single-extrusion, open filament system"
+    },
+    {
+      "model": "Ultimaker 2+ Connect",
+      "build_volume": "223x223x205mm",
+      "multi_color": false,
+      "notes": "Updated version with WiFi and touchscreen"
+    },
+    {
+      "model": "Ultimaker 3",
+      "build_volume": "215x215x200mm",
+      "multi_color": true,
+      "notes": "Dual-extrusion with swappable print cores"
+    },
+    {
+      "model": "Ultimaker 5S",
+      "build_volume": "330x240x300mm",
+      "multi_color": true,
+      "notes": "Enterprise solution with Material Station compatibility"
+    }
+  ],
+  "multi_color_notes": {
+    "technology": "Dual-extrusion (2 materials) with optional Material Station expansion",
+    "material_station": {
+      "supported_models": ["S5", "S7", "5S"],
+      "capacity": "Up to 6 materials with automatic switching",
+      "features": "Filament storage with humidity control"
+    },
+    "print_cores": "Swappable print cores for different material types",
+    "professional_use": "Industrial-grade multi-material solutions for engineering applications"
+  }
+}

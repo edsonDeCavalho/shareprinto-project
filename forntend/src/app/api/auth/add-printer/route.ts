@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2b7fbb4fc066f156974b6a73d8a39e0777cec6d49692ce558abb547a63179194
-size 740
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Forward the request to the Spring Boot backend
+    const response = await fetch('http://51.178.142.95:3000/auth/add-printer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    console.error('Add printer API error:', error);
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+

@@ -1,3 +1,98 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0d0bee7376fe1bbbe71013e9a815fd7cbc43211100b50ec7b281a3823f83873f
-size 2816
+{
+  "elegoo_printers": {
+    "FDM_printers": [
+      {
+        "model": "Neptune 3 Pro",
+        "build_volume": "225x225x280mm",
+        "multi_color": false,
+        "notes": "Direct drive, auto-leveling"
+      },
+      {
+        "model": "Neptune 3 Plus",
+        "build_volume": "320x320x400mm",
+        "multi_color": false,
+        "notes": "Large-format version of Neptune 3"
+      },
+      {
+        "model": "Neptune 3 Max",
+        "build_volume": "420x420x500mm",
+        "multi_color": false,
+        "notes": "Extra large build volume"
+      },
+      {
+        "model": "Neptune 4",
+        "build_volume": "225x225x265mm",
+        "multi_color": false,
+        "notes": "High-speed (500mm/s), Klipper firmware"
+      },
+      {
+        "model": "Neptune 4 Pro",
+        "build_volume": "225x225x265mm",
+        "multi_color": false,
+        "notes": "Upgraded Neptune 4 with all-metal hotend"
+      },
+      {
+        "model": "Neptune 4 Plus",
+        "build_volume": "320x320x400mm",
+        "multi_color": false,
+        "notes": "Large-format high-speed printer"
+      },
+      {
+        "model": "Neptune 4 Max",
+        "build_volume": "420x420x480mm",
+        "multi_color": false,
+        "notes": "XL version of Neptune 4 series"
+      },
+      {
+        "model": "Neptune 2",
+        "build_volume": "220x220x250mm",
+        "multi_color": false,
+        "notes": "Older budget model"
+      }
+    ],
+    "resin_printers": [
+      {
+        "model": "Mars 3",
+        "build_volume": "143x89x175mm",
+        "multi_color": false,
+        "notes": "4K monochrome LCD"
+      },
+      {
+        "model": "Mars 4 Ultra",
+        "build_volume": "131x82x180mm",
+        "multi_color": false,
+        "notes": "9.1 4K LCD"
+      },
+      {
+        "model": "Saturn 2",
+        "build_volume": "219x123x210mm",
+        "multi_color": false,
+        "notes": "8K resolution"
+      },
+      {
+        "model": "Saturn 3 Ultra",
+        "build_volume": "218x123x230mm",
+        "multi_color": false,
+        "notes": "12K resolution"
+      },
+      {
+        "model": "Jupiter",
+        "build_volume": "277x156x300mm",
+        "multi_color": false,
+        "notes": "Large-format 6K resin printer"
+      }
+    ],
+    "multi_color_notes": {
+      "official_support": "None of Elegoo printers natively support multi-color printing",
+      "workarounds": "Manual filament swaps or third-party solutions like Mosaic Palette can be used on FDM models",
+      "resin_limitation": "All Elegoo resin printers are single-material only",
+      "series_comparison": {
+        "Neptune_3": "Standard FDM series",
+        "Neptune_4": "High-speed Klipper-based series",
+        "Mars": "Standard resin series",
+        "Saturn": "Large-format resin series",
+        "Jupiter": "XL resin printer"
+      }
+    }
+  }
+}

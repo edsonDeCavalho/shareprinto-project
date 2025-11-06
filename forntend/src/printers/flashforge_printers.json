@@ -1,3 +1,77 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:918e3a31adbf7f9ffdab7f709588a30f9349da12583efeae0fda872e1c11e702
-size 2364
+{
+  "flashforge_printers": {
+    "FDM_printers": [
+      {
+        "model": "Adventurer 3",
+        "build_volume": "150x150x150mm",
+        "multi_color": false,
+        "notes": "Compact enclosed printer, popular in schools"
+      },
+      {
+        "model": "Adventurer 4",
+        "build_volume": "220x200x250mm",
+        "multi_color": false,
+        "notes": "Upgraded Adventurer with larger build volume"
+      },
+      {
+        "model": "Creator Pro",
+        "build_volume": "227x148x150mm",
+        "multi_color": true,
+        "notes": "Dual-extruder for two-color printing"
+      },
+      {
+        "model": "Creator Pro 2",
+        "build_volume": "200x148x150mm",
+        "multi_color": true,
+        "notes": "IDEX system for independent dual extrusion"
+      },
+      {
+        "model": "Guider 2",
+        "build_volume": "280x250x300mm",
+        "multi_color": false,
+        "notes": "Industrial-grade single extruder"
+      },
+      {
+        "model": "Guider 2S",
+        "build_volume": "280x250x300mm",
+        "multi_color": false,
+        "notes": "Upgraded version with HEPA filter"
+      },
+      {
+        "model": "Dreamer NX",
+        "build_volume": "230x150x140mm",
+        "multi_color": true,
+        "notes": "Dual-extruder with removable build plate"
+      },
+      {
+        "model": "Finder 3",
+        "build_volume": "140x140x140mm",
+        "multi_color": false,
+        "notes": "Entry-level fully enclosed printer"
+      }
+    ],
+    "resin_printers": [
+      {
+        "model": "Foto 8.9",
+        "build_volume": "192x120x200mm",
+        "multi_color": false,
+        "notes": "8.9\" 4K LCD resin printer"
+      },
+      {
+        "model": "Foto 6.0",
+        "build_volume": "130x80x150mm",
+        "multi_color": false,
+        "notes": "6\" 2K LCD resin printer"
+      }
+    ],
+    "multi_color_notes": {
+      "official_support": "Only Creator Pro, Creator Pro 2, and Dreamer NX support multi-color via dual extruders",
+      "limitations": "FlashForge doesn't offer AMS-style multi-color systems like Bambu Lab",
+      "workarounds": "Single-extruder models can use manual filament swaps",
+      "unique_features": {
+        "IDEX": "Creator Pro 2 features Independent Dual Extrusion for true multi-material printing",
+        "enclosed_chamber": "Most FlashForge printers come fully enclosed"
+      }
+    }
+  }
+}
