@@ -46,8 +46,14 @@
         && adduser --system --uid 1001 nextjs
     
     # Copy build output
-    COPY --from=builder /app/public ./public
     RUN mkdir .next && chown nextjs:nodejs .next
+    # Copy public directory (create empty if it doesn't exist)
+    RUN --mount=from=builder,source=/app/public,target=/tmp/public \
+        if [ -d /tmp/public ] && [ "$(ls -A /tmp/public 2>/dev/null)" ]; then \
+            mkdir -p ./public && cp -r /tmp/public/* ./public/; \
+        else \
+            mkdir -p ./public; \
+        fi
     COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
     COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
     
