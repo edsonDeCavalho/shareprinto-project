@@ -32,4 +32,8 @@ tsconfig.json -filter -diff -merge
 *.css -filter -diff -merge
 *.scss -filter -diff -merge
 *.sass -filter -diff -merge
+# Explicitly exclude Gradle build scripts from LFS
+*.gradle -filter -diff -merge
+*.gradle.kts -filter -diff -merge
+gradle.properties -filter -diff -merge
 *.kt !text !filter !merge !diff
