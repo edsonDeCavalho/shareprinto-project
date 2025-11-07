@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function CreateOrderPage() {
   return (
     <div className="flex-grow bg-grid p-4 sm:p-6 lg:p-8">
