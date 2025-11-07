@@ -47,15 +47,15 @@
     
     # Copy build output
     RUN mkdir .next && chown nextjs:nodejs .next
-    # Copy public directory (create empty if it doesn't exist)
-    RUN --mount=from=builder,source=/app/public,target=/tmp/public \
-        if [ -d /tmp/public ] && [ "$(ls -A /tmp/public 2>/dev/null)" ]; then \
-            mkdir -p ./public && cp -r /tmp/public/* ./public/; \
-        else \
-            mkdir -p ./public; \
-        fi
+    # Copy standalone output (includes public files automatically)
     COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
     COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+    # Copy public directory separately if it exists (fallback for standalone output)
+    # Next.js standalone should include public, but we copy as backup
+    RUN --mount=from=builder,source=/app,target=/tmp/builder,ro \
+        if [ -d /tmp/builder/public ] && [ -n "$(ls -A /tmp/builder/public 2>/dev/null)" ]; then \
+            mkdir -p ./public && cp -r /tmp/builder/public/* ./public/ 2>/dev/null || true; \
+        fi
     
     USER nextjs
     
