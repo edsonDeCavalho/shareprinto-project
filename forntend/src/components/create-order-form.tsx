@@ -20,7 +20,8 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { OrderService, type CreateOrderRequest } from '@/services/orderService';
 import { useUser } from '@/contexts/UserContext';
-import { STLPreviewService } from '@/services/stl-preview-service';
+// Dynamic import to avoid File API access during build
+// import { STLPreviewService } from '@/services/stl-preview-service';
 import { STLFilesList } from './stl-files-list';
 import { FarmerService, type FarmerLocation } from '@/services/farmerService';
 
