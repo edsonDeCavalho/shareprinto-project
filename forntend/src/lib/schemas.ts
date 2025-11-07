@@ -3,9 +3,14 @@ import { z } from 'zod';
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const ACCEPTED_FILE_TYPES = ['model/stl', 'application/vnd.ms-pki.stl', 'application/sla', ''];
 
+// Use z.any() with refine to avoid File API access during build
+const fileSchema = typeof File !== 'undefined' 
+  ? z.instanceof(File)
+  : z.any().refine((val) => val && typeof val === 'object' && 'name' in val && 'size' in val, 'Invalid file');
+
 export const UploadSchema = z.object({
   stlFiles: z
-    .array(z.instanceof(File))
+    .array(fileSchema)
     .min(1, 'At least one STL file is required.')
     .refine((files) => files.every((file) => file.size <= MAX_FILE_SIZE), `Max file size is 50MB.`)
     .refine(
@@ -31,7 +36,7 @@ export const CreateOrderSchema = z.object({
   estimatedTime: z.number().min(1, 'Estimated time must be at least 1 minute').optional(),
   recuperationCode: z.number().min(1000, 'Recuperation code must be 4 digits').max(9999, 'Recuperation code must be 4 digits').optional(),
   stlFiles: z
-    .array(z.instanceof(File))
+    .array(fileSchema)
     .min(1, 'At least one STL file is required')
     .refine((files) => files.every((file) => file.size <= MAX_FILE_SIZE), `Max file size is 50MB.`)
     .refine(

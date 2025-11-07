@@ -14,7 +14,9 @@ import {
   Loader2,
   AlertCircle
 } from 'lucide-react';
-import { STLPreviewService, STLPreviewData } from '@/services/stl-preview-service';
+// Dynamic import to avoid File API access during build
+// import { STLPreviewService, STLPreviewData } from '@/services/stl-preview-service';
+type STLPreviewData = any; // Type placeholder for build-time
 import {
   Table,
   TableBody,
@@ -58,40 +60,52 @@ export function STLFilesList({
     });
     setLoading(initialLoading);
 
-    // Load existing preview data
-    const existingPreviews = STLPreviewService.getAllPreviews();
-    const previewMap: Record<string, STLPreviewData> = {};
-    
-    existingPreviews.forEach(preview => {
-      previewMap[preview.fileName] = preview;
-    });
-    
-    setPreviewData(previewMap);
+    // Load existing preview data (only on client side)
+    if (typeof window !== 'undefined' && typeof File !== 'undefined') {
+      // Dynamically import STLPreviewService only on client
+      import('@/services/stl-preview-service').then(({ STLPreviewService }) => {
+        const existingPreviews = STLPreviewService.getAllPreviews();
+        const previewMap: Record<string, STLPreviewData> = {};
+        
+        existingPreviews.forEach(preview => {
+          previewMap[preview.fileName] = preview;
+        });
+        
+        setPreviewData(previewMap);
+      }).catch(() => {
+        // Silently fail if service can't be loaded
+      });
+    }
   }, [files]);
 
-  const handleDownload = (file: FileToPrint) => {
+  const handleDownload = async (file: FileToPrint) => {
     // In a real implementation, this would download the actual file
     // For now, we'll just show a message
     console.log('Downloading file:', file.fileName);
     
     // If we have the file stored locally, we can create a download link
-    if (file.fileId) {
-      const storedFile = STLPreviewService.getStoredFile(file.fileId);
-      if (storedFile) {
-        const fileBlob = STLPreviewService.base64ToFile(
-          storedFile.data, 
-          storedFile.name, 
-          storedFile.type
-        );
-        
-        const url = URL.createObjectURL(fileBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.fileName || 'download.stl';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+    if (file.fileId && typeof window !== 'undefined' && typeof File !== 'undefined') {
+      try {
+        const { STLPreviewService } = await import('@/services/stl-preview-service');
+        const storedFile = STLPreviewService.getStoredFile(file.fileId);
+        if (storedFile) {
+          const fileBlob = STLPreviewService.base64ToFile(
+            storedFile.data, 
+            storedFile.name, 
+            storedFile.type
+          );
+          
+          const url = URL.createObjectURL(fileBlob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = file.fileName || 'download.stl';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+      } catch (error) {
+        console.error('Error downloading file:', error);
       }
     }
   };
