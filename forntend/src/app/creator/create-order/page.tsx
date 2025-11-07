@@ -4,11 +4,23 @@ import { CreateOrderForm } from '@/components/create-order-form';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 // Force dynamic rendering to prevent static generation errors
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default function CreateOrderPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="flex-grow bg-grid p-4 sm:p-6 lg:p-8">
       <div className="container mx-auto max-w-4xl space-y-6">
