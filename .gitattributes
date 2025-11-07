@@ -36,4 +36,6 @@ tsconfig.json -filter -diff -merge
 *.gradle -filter -diff -merge
 *.gradle.kts -filter -diff -merge
 gradle.properties -filter -diff -merge
+# Explicitly exclude Kotlin files from LFS
+*.kt -filter -diff -merge
 *.kt !text !filter !merge !diff

@@ -2,6 +2,9 @@ import { UploadForm } from '@/components/upload-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Box } from 'lucide-react';
 
+// Force dynamic rendering to prevent static generation errors
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <div className="flex-grow flex items-center justify-center p-4 md:p-8 bg-grid">
