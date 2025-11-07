@@ -6,10 +6,6 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-// Force dynamic rendering to prevent static generation errors
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-
 export default function CreateOrderPage() {
   const [mounted, setMounted] = useState(false);
 
