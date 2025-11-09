@@ -2,6 +2,8 @@ package com.starboy99.shareprintoauthentificationbackend.service
 
 import com.starboy99.shareprintoauthentificationbackend.event.AuthEvent
 import com.starboy99.shareprintoauthentificationbackend.event.UserEvent
+import com.starboy99.shareprintoauthentificationbackend.event.UserEventType
+import com.starboy99.shareprintoauthentificationbackend.model.User
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
@@ -59,7 +61,7 @@ class KafkaProducerService(
     fun sendUserCreatedEvent(userId: String, userData: Map<String, Any>) {
         val event = UserEvent(
             eventId = java.util.UUID.randomUUID().toString(),
-            eventType = com.starboy99.shareprintoauthentificationbackend.event.UserEventType.USER_CREATED,
+            eventType = UserEventType.USER_CREATED,
             userId = userId,
             data = userData
         )
@@ -72,7 +74,7 @@ class KafkaProducerService(
     fun sendUserUpdatedEvent(userId: String, userData: Map<String, Any>) {
         val event = UserEvent(
             eventId = java.util.UUID.randomUUID().toString(),
-            eventType = com.starboy99.shareprintoauthentificationbackend.event.UserEventType.USER_UPDATED,
+            eventType = UserEventType.USER_UPDATED,
             userId = userId,
             data = userData
         )
@@ -129,7 +131,7 @@ class KafkaProducerService(
     fun sendPrinterAddedEvent(userId: String, printerData: Map<String, Any>) {
         val event = UserEvent(
             eventId = java.util.UUID.randomUUID().toString(),
-            eventType = com.starboy99.shareprintoauthentificationbackend.event.UserEventType.PRINTER_ADDED,
+            eventType = UserEventType.PRINTER_ADDED,
             userId = userId,
             data = printerData
         )
@@ -142,7 +144,7 @@ class KafkaProducerService(
     fun sendPrinterUpdatedEvent(userId: String, printerData: Map<String, Any>) {
         val event = UserEvent(
             eventId = java.util.UUID.randomUUID().toString(),
-            eventType = com.starboy99.shareprintoauthentificationbackend.event.UserEventType.PRINTER_UPDATED,
+            eventType = UserEventType.PRINTER_UPDATED,
             userId = userId,
             data = printerData
         )
@@ -155,7 +157,7 @@ class KafkaProducerService(
     fun sendPrinterDeletedEvent(userId: String, printerId: String) {
         val event = UserEvent(
             eventId = java.util.UUID.randomUUID().toString(),
-            eventType = com.starboy99.shareprintoauthentificationbackend.event.UserEventType.PRINTER_DELETED,
+            eventType = UserEventType.PRINTER_DELETED,
             userId = userId,
             data = mapOf("printerId" to printerId)
         )
@@ -165,7 +167,7 @@ class KafkaProducerService(
     /**
      * Send user login event to User-login-topic
      */
-    fun sendUserLoginEvent(user: com.starboy99.shareprintoauthentificationbackend.model.User): CompletableFuture<SendResult<String, Any>> {
+    fun sendUserLoginEvent(user: User): CompletableFuture<SendResult<String, Any>> {
         logger.info("🚀 Sending user login event for user: ${user.userId} to topic: $userLoginTopic")
         
         return kafkaTemplate.send(userLoginTopic, user.userId, user)
