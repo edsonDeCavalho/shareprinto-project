@@ -28,11 +28,15 @@ COPY settings.gradle.kts .
 # Copy source code
 COPY src src
 
+# Verify critical files are present (for debugging)
+RUN ls -la src/main/kotlin/com/starboy99/shareprintoauthentificationbackend/event/ || true
+RUN find src/main/kotlin -name "UserEvent.kt" -type f || true
+
 # Make Gradle wrapper executable
 RUN chmod +x ./gradlew
 
 # Build the application (skip tests for faster builds)
-RUN ./gradlew build -x test
+RUN ./gradlew clean build -x test
 
 # 2️⃣ Runtime stage
 FROM eclipse-temurin:17-jre-jammy
