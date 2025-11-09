@@ -42,9 +42,15 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 
 # Copy build output
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+
+# Copy public directory if it exists (Next.js standalone may not include it)
+# Use a conditional copy to avoid errors if public doesn't exist
+RUN --mount=from=builder,source=/app,target=/tmp/builder,ro \
+    if [ -d /tmp/builder/public ] && [ -n "$(ls -A /tmp/builder/public 2>/dev/null)" ]; then \
+        mkdir -p ./public && cp -r /tmp/builder/public/* ./public/ 2>/dev/null || true; \
+    fi
 
 # Set correct permissions
 RUN chown -R nextjs:nodejs /app
