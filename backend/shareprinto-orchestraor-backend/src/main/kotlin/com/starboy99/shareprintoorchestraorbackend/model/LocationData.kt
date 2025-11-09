@@ -1,4 +1,4 @@
-package com.starboy99.shareprintoordersbackend.model
+package com.starboy99.shareprintoorchestraorbackend.model
 
 
 data class LocationData(

@@ -1,6 +1,6 @@
 package com.starboy99.shareprintoorchestraorbackend.service
 
-import com.starboy99.shareprintoordersbackend.model.Order
+import com.starboy99.shareprintoorchestraorbackend.model.Order
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
