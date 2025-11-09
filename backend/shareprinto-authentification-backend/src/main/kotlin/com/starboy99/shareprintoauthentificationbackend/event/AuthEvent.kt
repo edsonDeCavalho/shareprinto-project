@@ -30,3 +30,4 @@ enum class AuthEventType {
     MULTI_FACTOR_VERIFIED,
     MULTI_FACTOR_FAILED
 }
+
