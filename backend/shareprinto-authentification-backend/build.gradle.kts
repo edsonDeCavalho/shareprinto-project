@@ -57,7 +57,9 @@ dependencyManagement {
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
+        allWarningsAsErrors.set(false)
     }
+    jvmToolchain(17)
 }
 
 tasks.withType<Test> {

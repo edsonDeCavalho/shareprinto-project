@@ -13,6 +13,10 @@ LABEL version="1.0.0" \
       service="auth-service" \
       description="Build stage for SharePrinto authentication backend using Gradle and OpenJDK 17."
 
+# Set locale and encoding to ensure proper file handling
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
 WORKDIR /app
 
 # Copy Gradle wrapper and configuration files
