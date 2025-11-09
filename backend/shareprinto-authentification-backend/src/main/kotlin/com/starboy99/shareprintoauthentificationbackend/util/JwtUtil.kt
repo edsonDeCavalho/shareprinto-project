@@ -2,9 +2,7 @@ package com.starboy99.shareprintoauthentificationbackend.util
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
-import io.jsonwebtoken.JwtParser
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.security.Key
@@ -36,11 +34,11 @@ class JwtUtil {
     
     private fun createToken(claims: Map<String, Any>, subject: String): String {
         return Jwts.builder()
-            .setClaims(claims)
-            .setSubject(subject)
-            .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + expiration))
-            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+            .claims(claims)
+            .subject(subject)
+            .issuedAt(Date(System.currentTimeMillis()))
+            .expiration(Date(System.currentTimeMillis() + expiration))
+            .signWith(getSigningKey())
             .compact()
     }
     
@@ -66,10 +64,11 @@ class JwtUtil {
     }
     
     private fun extractAllClaims(token: String): Claims {
-        val parser = Jwts.parser()
-            .setSigningKey(getSigningKey())
+        return Jwts.parser()
+            .verifyWith(Keys.hmacShaKeyFor(secret.toByteArray()))
             .build()
-        return parser.parseClaimsJws(token).body
+            .parseSignedClaims(token)
+            .payload
     }
     
     fun isTokenExpired(token: String): Boolean {
