@@ -29,14 +29,26 @@ class SecurityConfig {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOriginPatterns = listOf(
-            "http://localhost:9002",
-            "http://localhost:3000", 
-            "http://localhost:3003",
-            "http://127.0.0.1:9002",
-            "http://127.0.0.1:3000",
-            "http://127.0.0.1:3003"
-        )
+        
+        // Get allowed origins from environment variable or use defaults
+        val allowedOriginsEnv = System.getenv("CORS_ALLOWED_ORIGINS")
+        val allowedOrigins = if (allowedOriginsEnv != null) {
+            allowedOriginsEnv.split(",").map { it.trim() }
+        } else {
+            listOf(
+                "http://localhost:9002",
+                "http://localhost:3000", 
+                "http://localhost:3003",
+                "http://127.0.0.1:9002",
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:3003",
+                "http://51.178.142.95:9002",
+                "http://51.178.142.95:3000",
+                "http://51.178.142.95:3003"
+            )
+        }
+        
+        configuration.allowedOriginPatterns = allowedOrigins
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
         configuration.allowedHeaders = listOf("Content-Type", "Authorization", "X-Requested-With")
         configuration.allowCredentials = true

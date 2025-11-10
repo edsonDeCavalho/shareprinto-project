@@ -15,10 +15,13 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   async rewrites() {
+    // Use Docker service names for internal communication
+    const authServiceUrl = process.env.NEXT_PUBLIC_API_AUTH_URL || 'http://auth-service:3000';
+    
     return [
       {
         source: '/api/auth/:path*',
-        destination: 'http://51.178.142.95:3000/auth/:path*',
+        destination: `${authServiceUrl}/auth/:path*`,
       },
       {
         source: '/api/user-status/:path*',
