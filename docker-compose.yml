@@ -136,6 +136,7 @@ services:
       NEXT_PUBLIC_API_AUTH_URL: http://auth-service:3000
       NEXT_PUBLIC_API_ORDERS_URL: http://orders-service:8081
       NEXT_PUBLIC_API_ORCH_URL: http://orchestrator-service:8085
+      EXTERNAL_AUTH_URL: http://51.178.142.95:3000
     depends_on:
       - auth-service
       - orders-service
