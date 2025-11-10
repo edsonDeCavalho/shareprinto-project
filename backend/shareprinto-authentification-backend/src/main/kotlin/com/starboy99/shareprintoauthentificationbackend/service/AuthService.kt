@@ -606,58 +606,93 @@ class AuthService(
     }
     
     fun signin(request: SigninRequest): AuthResponse {
-        // Check if email exists
-        val user = userRepository.findByEmail(request.email)
-            ?: return AuthResponse(success = false, message = "No account found with this email address.")
-        
-        // Check if user has a digital code set up
-        if (user.digitalCode == null) {
-            return AuthResponse(success = false, message = "Please set up your digital code first.")
-        }
-        
-        // Check if digital code matches
-        if (!passwordEncoder.matches(request.digitalCode, user.digitalCode)) {
-            // Send login failed event
-            kafkaProducerService.sendLoginFailedEvent(
-                userId = user.userId,
-                ipAddress = null, // Could be extracted from request context
-                userAgent = null, // Could be extracted from request context
-                reason = "Incorrect digital code"
+        return try {
+            logger.info("🔐 Signin attempt for email: ${request.email}")
+            
+            // Check if email exists
+            val user = userRepository.findByEmail(request.email)
+            if (user == null) {
+                logger.warn("⚠️ No user found with email: ${request.email}")
+                return AuthResponse(success = false, message = "No account found with this email address.")
+            }
+            
+            logger.info("✅ User found: ${user.userId}, email: ${user.email}, phone: ${user.phone}")
+            
+            // Check if user has a digital code set up
+            if (user.digitalCode == null) {
+                logger.warn("⚠️ User ${user.userId} has no digital code set up")
+                return AuthResponse(success = false, message = "Please set up your digital code first.")
+            }
+            
+            // Check if digital code matches
+            if (!passwordEncoder.matches(request.digitalCode, user.digitalCode)) {
+                logger.warn("⚠️ Incorrect digital code for user: ${user.userId}")
+                // Send login failed event (wrap in try-catch to not fail if Kafka is down)
+                try {
+                    kafkaProducerService.sendLoginFailedEvent(
+                        userId = user.userId,
+                        ipAddress = null,
+                        userAgent = null,
+                        reason = "Incorrect digital code"
+                    )
+                } catch (e: Exception) {
+                    logger.error("❌ Failed to send login failed event to Kafka: ${e.message}", e)
+                }
+                return AuthResponse(success = false, message = "Incorrect digital code. Please try again.")
+            }
+            
+            logger.info("✅ Digital code verified for user: ${user.userId}")
+            
+            val updatedUser = user.copy(
+                latSeenAt = LocalDateTime.now(),
+                online = true,
+                updatedAt = LocalDateTime.now()
             )
-            return AuthResponse(success = false, message = "Incorrect digital code. Please try again.")
+            
+            val savedUser = userRepository.save(updatedUser)
+            logger.info("✅ User updated in database: ${savedUser.userId}")
+            
+            // Use userId (not id) and handle nullable email
+            val userIdentifier = savedUser.email ?: savedUser.phone
+            val token = jwtUtil.generateToken(savedUser.userId, userIdentifier, savedUser.userType)
+            logger.info("✅ JWT token generated for user: ${savedUser.userId}")
+            
+            // Send login success event (wrap in try-catch to not fail if Kafka is down)
+            try {
+                kafkaProducerService.sendLoginSuccessEvent(
+                    userId = savedUser.userId,
+                    sessionId = token,
+                    ipAddress = null,
+                    userAgent = null
+                )
+                logger.info("✅ Login success event sent to Kafka")
+            } catch (e: Exception) {
+                logger.error("❌ Failed to send login success event to Kafka: ${e.message}", e)
+                // Continue even if Kafka fails
+            }
+            
+            // Send user login event to User-login-topic for orchestrator
+            try {
+                logger.info("🔔 About to send user login event for user: ${savedUser.userId}")
+                kafkaProducerService.sendUserLoginEvent(savedUser)
+                logger.info("🔔 User login event sent for user: ${savedUser.userId}")
+            } catch (e: Exception) {
+                logger.error("❌ Failed to send user login event to Kafka: ${e.message}", e)
+                // Continue even if Kafka fails
+            }
+            
+            logger.info("✅ Signin successful for user: ${savedUser.userId}")
+            AuthResponse(
+                success = true,
+                message = "Sign in successful",
+                token = token,
+                user = savedUser.toUserDto()
+            )
+        } catch (e: Exception) {
+            logger.error("❌ Error during signin: ${e.message}", e)
+            logger.error("Stack trace:", e)
+            throw e // Re-throw to be caught by GlobalExceptionHandler
         }
-        
-        val updatedUser = user.copy(
-            latSeenAt = LocalDateTime.now(),
-            online = true,
-            updatedAt = LocalDateTime.now()
-        )
-        
-        val savedUser = userRepository.save(updatedUser)
-        
-        // Use userId (not id) and handle nullable email
-        val userIdentifier = savedUser.email ?: savedUser.phone
-        val token = jwtUtil.generateToken(savedUser.userId, userIdentifier, savedUser.userType)
-        
-        // Send login success event
-        kafkaProducerService.sendLoginSuccessEvent(
-            userId = savedUser.userId,
-            sessionId = token, // Using token as session ID for simplicity
-            ipAddress = null, // Could be extracted from request context
-            userAgent = null // Could be extracted from request context
-        )
-        
-        // Send user login event to User-login-topic for orchestrator
-        logger.info("🔔 About to send user login event for user: ${savedUser.userId}")
-        kafkaProducerService.sendUserLoginEvent(savedUser)
-        logger.info("🔔 User login event sent for user: ${savedUser.userId}")
-        
-        return AuthResponse(
-            success = true,
-            message = "Sign in successful",
-            token = token,
-            user = savedUser.toUserDto()
-        )
     }
     
     fun getUserByPhone(phone: String): AuthResponse {
