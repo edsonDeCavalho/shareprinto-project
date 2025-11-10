@@ -619,7 +619,7 @@ class AuthService(
         if (!passwordEncoder.matches(request.digitalCode, user.digitalCode)) {
             // Send login failed event
             kafkaProducerService.sendLoginFailedEvent(
-                userId = user.id,
+                userId = user.userId,
                 ipAddress = null, // Could be extracted from request context
                 userAgent = null, // Could be extracted from request context
                 reason = "Incorrect digital code"
@@ -635,11 +635,13 @@ class AuthService(
         
         val savedUser = userRepository.save(updatedUser)
         
-        val token = jwtUtil.generateToken(savedUser.id!!, savedUser.email!!, savedUser.userType)
+        // Use userId (not id) and handle nullable email
+        val userIdentifier = savedUser.email ?: savedUser.phone
+        val token = jwtUtil.generateToken(savedUser.userId, userIdentifier, savedUser.userType)
         
         // Send login success event
         kafkaProducerService.sendLoginSuccessEvent(
-            userId = savedUser.id!!,
+            userId = savedUser.userId,
             sessionId = token, // Using token as session ID for simplicity
             ipAddress = null, // Could be extracted from request context
             userAgent = null // Could be extracted from request context
