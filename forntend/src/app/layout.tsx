@@ -9,6 +9,7 @@ import { NotificationProvider } from '@/contexts/NotificationContext';
 import { OfferNotificationWrapper } from '@/components/offer-notification-wrapper';
 import { GlobalSocketManager } from '@/components/GlobalSocketManager';
 import { STLInitializer } from '@/components/stl-initializer';
+import { AuthConnectionTestLoader } from '@/components/AuthConnectionTestLoader';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -69,6 +70,7 @@ export default function RootLayout({
       <body className={cn('font-body antialiased', roboto.variable)}>
         <UserProvider>
           <NotificationProvider>
+            <AuthConnectionTestLoader />
             <GlobalSocketManager />
             <STLInitializer />
             <div className="flex flex-col min-h-screen">
