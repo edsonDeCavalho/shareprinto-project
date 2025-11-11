@@ -284,7 +284,8 @@ async function detectCountryAndLanguage() {
 }
 
 // Language switcher functionality
-let currentLanguage = localStorage.getItem('language') || null;
+// Page is always in French - language detection disabled
+let currentLanguage = 'fr'; // Always French
 
 // Language flag mapping
 const languageFlags = {
@@ -322,12 +323,7 @@ window.setLanguage = function(lang) {
 
 // Initialize language on page load
 document.addEventListener('DOMContentLoaded', async () => {
-    // If no manual language selection, detect automatically
-    if (!currentLanguage) {
-        const detectedLang = await detectCountryAndLanguage();
-        currentLanguage = detectedLang;
-    }
-    
-    window.setLanguage(currentLanguage);
+    // Page is always in French - no detection needed
+    window.setLanguage('fr');
 });
 
