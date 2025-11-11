@@ -61,7 +61,7 @@ const translations = {
         
         // Hero Section
         heroTitle: "Connectez. Imprimez. Partagez.",
-        heroSubtitle: "L'avenir de l'impression 3D est le pair-à-pair. Rejoignez la communauté qui révolutionne la façon dont nous créons et fabriquons.",
+        heroSubtitle: "L'avenir de l'impression 3D est le pair-à-pair. Rejoignez la communauté Île-de-France qui révolutionne la façon dont nous créons et fabriquons.",
         btnGetStarted: "Commencer",
         btnLearnMore: "En savoir plus",
         
@@ -70,7 +70,7 @@ const translations = {
         step1Title: "Téléchargez votre design",
         step1Desc: "Partagez votre fichier de modèle 3D (STL, OBJ, etc.) et spécifiez vos exigences d'impression.",
         step2Title: "Trouvez des imprimantes locales",
-        step2Desc: "Notre plateforme vous connecte avec des propriétaires d'imprimantes 3D à proximité qui peuvent donner vie à votre design.",
+        step2Desc: "Notre plateforme vous connecte avec des propriétaires d'imprimantes 3D en Île-de-France qui peuvent donner vie à votre design.",
         step3Title: "Recevez des offres",
         step3Desc: "Obtenez des offres compétitives de plusieurs imprimantes. Comparez les prix, les matériaux et les délais de livraison.",
         step4Title: "Imprimez et livrez",
@@ -81,13 +81,13 @@ const translations = {
         benefit1Title: "Économique",
         benefit1Desc: "Accédez aux services d'impression 3D sans investir dans un équipement coûteux. Payez uniquement ce dont vous avez besoin.",
         benefit2Title: "Local et durable",
-        benefit2Desc: "Soutenez les créateurs locaux et réduisez les distances d'expédition. Imprimez plus près de chez vous, plus rapidement et plus écologiquement.",
+        benefit2Desc: "Soutenez les créateurs locaux en Île-de-France et réduisez les distances d'expédition. Imprimez plus près de chez vous, plus rapidement et plus écologiquement.",
         benefit3Title: "Délais rapides",
-        benefit3Desc: "Trouvez des imprimantes dans votre région pour une livraison rapide. Plus besoin d'attendre des semaines pour vos impressions.",
+        benefit3Desc: "Trouvez des imprimantes en Île-de-France pour une livraison rapide. Plus besoin d'attendre des semaines pour vos impressions.",
         benefit4Title: "Variété de matériaux",
         benefit4Desc: "Choisissez parmi une large gamme de matériaux et de couleurs. Chaque imprimante offre différentes options.",
         benefit5Title: "Communauté",
-        benefit5Desc: "Rejoignez un réseau de créateurs et de fabricants. Établissez des relations avec des passionnés d'impression 3D locaux.",
+        benefit5Desc: "Rejoignez un réseau de créateurs et de fabricants en Île-de-France. Établissez des relations avec des passionnés d'impression 3D locaux.",
         benefit6Title: "Sécurisé et fiable",
         benefit6Desc: "Transactions sécurisées, imprimantes vérifiées et garanties de qualité. Votre satisfaction est notre priorité.",
         
@@ -99,10 +99,13 @@ const translations = {
         ctaNote: "Gratuit pour rejoindre. Commencez à imprimer aujourd'hui.",
         
         // Footer
-        footerTagline: "Connecter les créateurs avec des imprimantes 3D dans le monde entier.",
+        footerTagline: "Connecter les créateurs avec des imprimantes 3D en Île-de-France.",
         footerQuickLinks: "Liens rapides",
         footerContact: "Contact",
-        footerRights: "Tous droits réservés."
+        footerRights: "Tous droits réservés.",
+        
+        // Service Notice
+        serviceNotice: "Service disponible uniquement en Île-de-France, France"
     },
     es: {
         // Navigation
@@ -129,7 +132,7 @@ const translations = {
         step4Desc: "Elige tu impresora preferida y recibe tu producto terminado entregado en tu puerta.",
         
         // Benefits
-        benefitsTitle: "¿Por qué elegir SharePrinto?",
+        benefitsTitle: "¿Por qué elegir   SharePrinto?",
         benefit1Title: "Económico",
         benefit1Desc: "Accede a servicios de impresión 3D sin invertir en equipos costosos. Paga solo por lo que necesitas.",
         benefit2Title: "Local y sostenible",
