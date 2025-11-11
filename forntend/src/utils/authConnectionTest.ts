@@ -31,28 +31,16 @@ export async function testAuthConnection(detailed: boolean = false): Promise<voi
   
   const tests: Array<{ name: string; url: string; description: string; method?: string }> = [
     {
-      name: 'Health Check (External)',
-      url: `${externalUrl}/auth`,
-      description: 'Testing direct connection to auth service via external IP',
-      method: 'GET'
-    },
-    {
       name: 'Health Check (Via Frontend API)',
       url: '/api/auth',
-      description: 'Testing through Next.js API route (server-side)',
+      description: 'Testing through Next.js API route - This is the recommended way',
       method: 'GET'
     },
     {
-      name: 'Database Health',
-      url: `${externalUrl}/health/db`,
-      description: 'Testing MongoDB connection status',
-      method: 'GET'
-    },
-    {
-      name: 'Auth Service Health',
-      url: `${externalUrl}/health`,
-      description: 'Testing auth service health endpoint',
-      method: 'GET'
+      name: 'Signin Endpoint Test',
+      url: '/api/auth/signin',
+      description: 'Testing signin endpoint availability (will fail without credentials, but tests connection)',
+      method: 'POST'
     }
   ];
   
@@ -74,13 +62,20 @@ export async function testAuthConnection(detailed: boolean = false): Promise<voi
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
       
-      const response = await fetch(test.url, {
+      const fetchOptions: RequestInit = {
         method: test.method || 'GET',
         signal: controller.signal,
         headers: {
           'Content-Type': 'application/json',
         }
-      });
+      };
+      
+      // Add body for POST requests
+      if (test.method === 'POST') {
+        fetchOptions.body = JSON.stringify({ email: 'test@example.com', digitalCode: '1234' });
+      }
+      
+      const response = await fetch(test.url, fetchOptions);
       
       clearTimeout(timeoutId);
       const responseTime = Date.now() - startTime;

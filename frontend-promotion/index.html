@@ -4,35 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SharePrinto - Peer-to-Peer 3D Printing</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-grid">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
+                    <img src="images/favicon.ico" alt="SharePrinto" class="logo-icon">
                     <h1>SharePrinto</h1>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#get-started">Get Started</a></li>
-                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu">
+                    <ul class="nav-links">
+                        <li><a href="#home" data-i18n="navHome" onclick="closeMobileMenu()">Home</a></li>
+                        <li><a href="#how-it-works" data-i18n="navHowItWorks" onclick="closeMobileMenu()">How It Works</a></li>
+                        <li><a href="#benefits" data-i18n="navBenefits" onclick="closeMobileMenu()">Benefits</a></li>
+                        <li><a href="#get-started" data-i18n="navGetStarted" onclick="closeMobileMenu()">Get Started</a></li>
+                    </ul>
+                    <div class="lang-switcher">
+                        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+                        <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">FR</button>
+                        <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
+                        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Connect. Print. Share.</h1>
-                <p class="hero-subtitle">The future of 3D printing is peer-to-peer. Join the community that's revolutionizing how we create and manufacture.</p>
+                <h1 class="hero-title" data-i18n="heroTitle">Connect. Print. Share.</h1>
+                <p class="hero-subtitle" data-i18n="heroSubtitle">The future of 3D printing is peer-to-peer. Join the community that's revolutionizing how we create and manufacture.</p>
                 <div class="hero-buttons">
-                    <a href="#get-started" class="btn btn-primary">Get Started</a>
-                    <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+                    <a href="#get-started" class="btn btn-primary" data-i18n="btnGetStarted">Get Started</a>
+                    <a href="#how-it-works" class="btn btn-secondary" data-i18n="btnLearnMore">Learn More</a>
                 </div>
             </div>
         </div>
@@ -42,27 +61,31 @@
     <!-- How It Works Section -->
     <section id="how-it-works" class="how-it-works">
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
+            <h2 class="section-title" data-i18n="howItWorksTitle">How It Works</h2>
             <div class="steps">
                 <div class="step">
-                    <div class="step-icon">1</div>
-                    <h3>Upload Your Design</h3>
-                    <p>Share your 3D model file (STL, OBJ, etc.) and specify your printing requirements.</p>
+                    <div class="step-icon">
+                        <img src="images/creator.png" alt="Creator" class="step-image">
+                    </div>
+                    <h3 data-i18n="step1Title">Upload Your Design</h3>
+                    <p data-i18n="step1Desc">Share your 3D model file (STL, OBJ, etc.) and specify your printing requirements.</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">2</div>
-                    <h3>Find Local Printers</h3>
-                    <p>Our platform connects you with nearby 3D printer owners who can bring your design to life.</p>
+                    <div class="step-icon">
+                        <img src="images/farmer.png" alt="Farmer" class="step-image">
+                    </div>
+                    <h3 data-i18n="step2Title">Find Local Printers</h3>
+                    <p data-i18n="step2Desc">Our platform connects you with nearby 3D printer owners who can bring your design to life.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">3</div>
-                    <h3>Receive Offers</h3>
-                    <p>Get competitive offers from multiple printers. Compare prices, materials, and delivery times.</p>
+                    <h3 data-i18n="step3Title">Receive Offers</h3>
+                    <p data-i18n="step3Desc">Get competitive offers from multiple printers. Compare prices, materials, and delivery times.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">4</div>
-                    <h3>Print & Deliver</h3>
-                    <p>Choose your preferred printer, and receive your finished product delivered to your door.</p>
+                    <h3 data-i18n="step4Title">Print & Deliver</h3>
+                    <p data-i18n="step4Desc">Choose your preferred printer, and receive your finished product delivered to your door.</p>
                 </div>
             </div>
         </div>
@@ -71,37 +94,37 @@
     <!-- Benefits Section -->
     <section id="benefits" class="benefits">
         <div class="container">
-            <h2 class="section-title">Why Choose SharePrinto?</h2>
+            <h2 class="section-title" data-i18n="benefitsTitle">Why Choose SharePrinto?</h2>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">💰</div>
-                    <h3>Cost-Effective</h3>
-                    <p>Access 3D printing services without investing in expensive equipment. Pay only for what you need.</p>
+                    <h3 data-i18n="benefit1Title">Cost-Effective</h3>
+                    <p data-i18n="benefit1Desc">Access 3D printing services without investing in expensive equipment. Pay only for what you need.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🌍</div>
-                    <h3>Local & Sustainable</h3>
-                    <p>Support local makers and reduce shipping distances. Print closer to home, faster and greener.</p>
+                    <h3 data-i18n="benefit2Title">Local & Sustainable</h3>
+                    <p data-i18n="benefit2Desc">Support local makers and reduce shipping distances. Print closer to home, faster and greener.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">⚡</div>
-                    <h3>Fast Turnaround</h3>
-                    <p>Find printers in your area for quick delivery. No more waiting weeks for your prints.</p>
+                    <h3 data-i18n="benefit3Title">Fast Turnaround</h3>
+                    <p data-i18n="benefit3Desc">Find printers in your area for quick delivery. No more waiting weeks for your prints.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🎨</div>
-                    <h3>Material Variety</h3>
-                    <p>Choose from a wide range of materials and colors. Each printer offers different options.</p>
+                    <h3 data-i18n="benefit4Title">Material Variety</h3>
+                    <p data-i18n="benefit4Desc">Choose from a wide range of materials and colors. Each printer offers different options.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🤝</div>
-                    <h3>Community Driven</h3>
-                    <p>Join a network of creators and makers. Build relationships with local 3D printing enthusiasts.</p>
+                    <h3 data-i18n="benefit5Title">Community Driven</h3>
+                    <p data-i18n="benefit5Desc">Join a network of creators and makers. Build relationships with local 3D printing enthusiasts.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🔒</div>
-                    <h3>Secure & Trusted</h3>
-                    <p>Safe transactions, verified printers, and quality guarantees. Your satisfaction is our priority.</p>
+                    <h3 data-i18n="benefit6Title">Secure & Trusted</h3>
+                    <p data-i18n="benefit6Desc">Safe transactions, verified printers, and quality guarantees. Your satisfaction is our priority.</p>
                 </div>
             </div>
         </div>
@@ -111,13 +134,17 @@
     <section id="get-started" class="get-started">
         <div class="container">
             <div class="get-started-content">
-                <h2 class="section-title">Ready to Start Printing?</h2>
-                <p class="get-started-subtitle">Join thousands of creators and makers who are already using SharePrinto to bring their ideas to life.</p>
+                <h2 class="section-title" data-i18n="getStartedTitle">Ready to Start Printing?</h2>
+                <p class="get-started-subtitle" data-i18n="getStartedSubtitle">Join thousands of creators and makers who are already using SharePrinto to bring their ideas to life.</p>
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary btn-large">Create an Account</a>
-                    <a href="#" class="btn btn-outline btn-large">Become a Printer</a>
+                    <a href="#" class="btn btn-primary btn-large">
+                        <img src="images/creator.png" alt="Creator" class="btn-icon"><span data-i18n="btnCreateAccount">Create an Account</span>
+                    </a>
+                    <a href="#" class="btn btn-outline btn-large">
+                        <img src="images/farmer.png" alt="Farmer" class="btn-icon"><span data-i18n="btnBecomePrinter">Become a Printer</span>
+                    </a>
                 </div>
-                <p class="cta-note">Free to join. Start printing today.</p>
+                <p class="cta-note" data-i18n="ctaNote">Free to join. Start printing today.</p>
             </div>
         </div>
     </section>
@@ -128,28 +155,74 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>SharePrinto</h3>
-                    <p>Connecting creators with 3D printers worldwide.</p>
+                    <p data-i18n="footerTagline">Connecting creators with 3D printers worldwide.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="footerQuickLinks">Quick Links</h4>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#benefits">Benefits</a></li>
-                        <li><a href="#get-started">Get Started</a></li>
+                        <li><a href="#home" data-i18n="navHome">Home</a></li>
+                        <li><a href="#how-it-works" data-i18n="navHowItWorks">How It Works</a></li>
+                        <li><a href="#benefits" data-i18n="navBenefits">Benefits</a></li>
+                        <li><a href="#get-started" data-i18n="navGetStarted">Get Started</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Contact</h4>
+                    <h4 data-i18n="footerContact">Contact</h4>
                     <p>Email: info@shareprinto.com</p>
                     <p>Support: support@shareprinto.com</p>
+                    <div class="payment-icons">
+                        <img src="images/paypal.webp" alt="PayPal" class="payment-icon">
+                        <img src="images/Paypal2.png" alt="PayPal" class="payment-icon">
+                        <img src="images/Visa.webp" alt="Visa" class="payment-icon">
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 SharePrinto. All rights reserved.</p>
+                <p>&copy; 2024 SharePrinto. <span data-i18n="footerRights">All rights reserved.</span></p>
             </div>
         </div>
     </footer>
+    <script src="translations.js"></script>
+    <script>
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            navMenu.classList.toggle('active');
+            toggle.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            navMenu.classList.remove('active');
+            toggle.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.querySelector('.nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const navContent = document.querySelector('.nav-content');
+            
+            if (navMenu && navMenu.classList.contains('active')) {
+                if (!navContent.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            }
+        });
+
+        // Close mobile menu on window resize (if resized to desktop)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+    </script>
 </body>
 </html>
 

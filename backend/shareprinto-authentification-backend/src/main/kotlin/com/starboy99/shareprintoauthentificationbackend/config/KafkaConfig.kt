@@ -17,11 +17,16 @@ import org.springframework.kafka.support.serializer.JsonSerializer
 @EnableKafka
 class KafkaConfig {
     
-    @Value("\${spring.kafka.bootstrap-servers}")
-    private lateinit var bootstrapServers: String
+    // Try to get from Spring property first, then fallback to environment variable, then default
+    private val bootstrapServers: String = 
+        System.getenv("KAFKA_BOOTSTRAP_SERVERS") 
+            ?: System.getProperty("spring.kafka.bootstrap-servers")
+            ?: "kafka:9092"
     
-    @Value("\${spring.kafka.consumer.group-id}")
-    private lateinit var groupId: String
+    private val groupId: String = 
+        System.getenv("KAFKA_CONSUMER_GROUP_ID")
+            ?: System.getProperty("spring.kafka.consumer.group-id")
+            ?: "shareprinto-auth"
     
     // Producer Configuration
     @Bean
