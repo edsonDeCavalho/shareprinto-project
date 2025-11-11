@@ -124,7 +124,7 @@ services:
     networks:
       - shareprinto-network
 
-  # --- MAIN FRONTEND f---
+  # --- MAIN FRONTEND  f---
   frontend:
     build: 
       context: ./forntend
