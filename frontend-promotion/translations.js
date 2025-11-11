@@ -132,7 +132,7 @@ const translations = {
         step4Desc: "Elige tu impresora preferida y recibe tu producto terminado entregado en tu puerta.",
         
         // Benefits
-        benefitsTitle: "¿Por qué elegir   SharePrinto?",
+        benefitsTitle: "¿Por qué elegir  SharePrinto?",
         benefit1Title: "Económico",
         benefit1Desc: "Accede a servicios de impresión 3D sin invertir en equipos costosos. Paga solo por lo que necesitas.",
         benefit2Title: "Local y sostenible",
