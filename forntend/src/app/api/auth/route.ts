@@ -7,8 +7,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     // Try Docker service name first (for internal communication), then fallback to external URL
+    // Note: In Next.js API routes, we can use server-side env vars
     const internalUrl = process.env.NEXT_PUBLIC_API_AUTH_URL || 'http://auth-service:3000';
     const externalUrl = process.env.EXTERNAL_AUTH_URL || 'http://51.178.142.95:3000';
+    
+    console.log('🔍 Auth health check - Internal URL:', internalUrl);
+    console.log('🔍 Auth health check - External URL:', externalUrl);
     
     const urlsToTry = [
       { url: `${internalUrl}/auth`, name: 'internal (Docker service)' },
@@ -23,7 +27,7 @@ export async function GET(request: NextRequest) {
         
         // Create AbortController for timeout
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout (increased for debugging)
         
         const response = await fetch(url, {
           method: 'GET',

@@ -286,6 +286,14 @@ async function detectCountryAndLanguage() {
 // Language switcher functionality
 let currentLanguage = localStorage.getItem('language') || null;
 
+// Language flag mapping
+const languageFlags = {
+    'en': { flag: '🇬🇧', code: 'EN' },
+    'fr': { flag: '🇫🇷', code: 'FR' },
+    'es': { flag: '🇪🇸', code: 'ES' },
+    'de': { flag: '🇩🇪', code: 'DE' }
+};
+
 // Make setLanguage globally accessible
 window.setLanguage = function(lang) {
     currentLanguage = lang;
@@ -303,13 +311,13 @@ window.setLanguage = function(lang) {
         }
     });
     
-    // Update language switcher active state
-    document.querySelectorAll('.lang-switcher button').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.lang === lang) {
-            btn.classList.add('active');
-        }
-    });
+    // Update language display flag and code
+    if (languageFlags[lang]) {
+        const currentFlag = document.getElementById('current-flag');
+        const currentLang = document.getElementById('current-lang');
+        if (currentFlag) currentFlag.textContent = languageFlags[lang].flag;
+        if (currentLang) currentLang.textContent = languageFlags[lang].code;
+    }
 };
 
 // Initialize language on page load

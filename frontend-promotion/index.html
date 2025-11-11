@@ -32,10 +32,31 @@
                         <li><a href="#get-started" data-i18n="navGetStarted" onclick="closeMobileMenu()">Get Started</a></li>
                     </ul>
                     <div class="lang-switcher">
-                        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
-                        <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">FR</button>
-                        <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
-                        <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+                        <button class="lang-switcher-btn" onclick="toggleLangDropdown(event)">
+                            <span class="lang-flag" id="current-flag">🇬🇧</span>
+                            <span class="lang-code" id="current-lang">EN</span>
+                            <svg class="lang-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 4.5L6 7.5L9 4.5"/>
+                            </svg>
+                        </button>
+                        <div class="lang-dropdown" id="lang-dropdown">
+                            <button class="lang-option" data-lang="en" data-flag="🇬🇧" onclick="selectLanguage('en', '🇬🇧', 'EN')">
+                                <span class="lang-flag">🇬🇧</span>
+                                <span class="lang-name">English</span>
+                            </button>
+                            <button class="lang-option" data-lang="fr" data-flag="🇫🇷" onclick="selectLanguage('fr', '🇫🇷', 'FR')">
+                                <span class="lang-flag">🇫🇷</span>
+                                <span class="lang-name">Français</span>
+                            </button>
+                            <button class="lang-option" data-lang="es" data-flag="🇪🇸" onclick="selectLanguage('es', '🇪🇸', 'ES')">
+                                <span class="lang-flag">🇪🇸</span>
+                                <span class="lang-name">Español</span>
+                            </button>
+                            <button class="lang-option" data-lang="de" data-flag="🇩🇪" onclick="selectLanguage('de', '🇩🇪', 'DE')">
+                                <span class="lang-flag">🇩🇪</span>
+                                <span class="lang-name">Deutsch</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -220,6 +241,31 @@
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768) {
                 closeMobileMenu();
+            }
+        });
+
+        // Language dropdown functionality
+        function toggleLangDropdown(event) {
+            event.stopPropagation();
+            const langSwitcher = document.querySelector('.lang-switcher');
+            langSwitcher.classList.toggle('active');
+        }
+
+        function selectLanguage(lang, flag, code) {
+            setLanguage(lang);
+            closeLangDropdown();
+        }
+
+        function closeLangDropdown() {
+            const langSwitcher = document.querySelector('.lang-switcher');
+            langSwitcher.classList.remove('active');
+        }
+
+        // Close language dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const langSwitcher = document.querySelector('.lang-switcher');
+            if (langSwitcher && !langSwitcher.contains(e.target)) {
+                closeLangDropdown();
             }
         });
     </script>
