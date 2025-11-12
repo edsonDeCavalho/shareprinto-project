@@ -137,6 +137,9 @@ services:
       NEXT_PUBLIC_API_ORDERS_URL: http://orders-service:8081
       NEXT_PUBLIC_API_ORCH_URL: http://orchestrator-service:8085
       EXTERNAL_AUTH_URL: http://51.178.142.95:3000
+      # Google API Keys - Set via environment variables or .env file
+      # NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
+      # GOOGLE_GENAI_API_KEY: ${GOOGLE_GENAI_API_KEY:-}
     depends_on:
       - auth-service
       - orders-service

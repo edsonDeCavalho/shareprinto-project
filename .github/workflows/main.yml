@@ -47,44 +47,105 @@ jobs:
             
             # Find and kill any containers or processes using our ports
             for port in 3000 8081 8085 9002 3003 27017 9092; do
-              # Find all running containers and check their port mappings
-              docker ps --format "{{.ID}} {{.Ports}}" | grep -E ":$port->|0\.0\.0\.0:$port|:::$port" | awk '{print $1}' | while read container_id; do
+              echo "Cleaning up port $port..."
+              
+              # Method 1: Find containers by port mapping using docker ps
+              docker ps --format "{{.ID}} {{.Ports}}" 2>/dev/null | grep -E ":$port->|0\.0\.0\.0:$port|:::$port|127\.0\.0\.1:$port" | awk '{print $1}' | while read container_id; do
                 if [ ! -z "$container_id" ]; then
-                  echo "Stopping container using port $port: $container_id"
+                  echo "  Stopping container using port $port: $container_id"
                   docker stop $container_id 2>/dev/null || true
                   docker rm -f $container_id 2>/dev/null || true
                 fi
               done
-              # Also check stopped containers that might have port bindings
-              docker ps -a --format "{{.ID}} {{.Ports}}" | grep -E ":$port->|0\.0\.0\.0:$port|:::$port" | awk '{print $1}' | while read container_id; do
+              
+              # Method 2: Find containers by inspecting all containers
+              docker ps -a --format "{{.ID}}" 2>/dev/null | while read container_id; do
                 if [ ! -z "$container_id" ]; then
-                  echo "Removing stopped container that used port $port: $container_id"
+                  # Check if this container has port bindings for our port
+                  port_bindings=$(docker port $container_id 2>/dev/null | grep -E ":$port" || true)
+                  if [ ! -z "$port_bindings" ]; then
+                    echo "  Removing container with port binding for $port: $container_id"
+                    docker stop $container_id 2>/dev/null || true
+                    docker rm -f $container_id 2>/dev/null || true
+                  fi
+                fi
+              done
+              
+              # Method 3: Use docker ps with --filter publish (if supported)
+              docker ps --filter "publish=$port" --format "{{.ID}}" 2>/dev/null | while read container_id; do
+                if [ ! -z "$container_id" ]; then
+                  echo "  Removing container publishing port $port: $container_id"
+                  docker stop $container_id 2>/dev/null || true
                   docker rm -f $container_id 2>/dev/null || true
                 fi
               done
-              # Also try to kill any host processes (if lsof is available)
+              
+              # Method 4: Kill host processes using the port
               if command -v lsof >/dev/null 2>&1; then
                 lsof -ti:$port 2>/dev/null | while read pid; do
                   if [ ! -z "$pid" ]; then
-                    echo "Killing process using port $port (PID: $pid)"
+                    echo "  Killing process using port $port (PID: $pid)"
+                    kill -9 $pid 2>/dev/null || true
+                  fi
+                done
+              fi
+              
+              # Method 5: Use ss or netstat to find processes
+              if command -v ss >/dev/null 2>&1; then
+                ss -lptn "sport = :$port" 2>/dev/null | grep -oP 'pid=\K[0-9]+' | while read pid; do
+                  if [ ! -z "$pid" ]; then
+                    echo "  Killing process found via ss on port $port (PID: $pid)"
+                    kill -9 $pid 2>/dev/null || true
+                  fi
+                done
+              elif command -v netstat >/dev/null 2>&1; then
+                netstat -tlnp 2>/dev/null | grep ":$port " | awk '{print $7}' | cut -d'/' -f1 | while read pid; do
+                  if [ ! -z "$pid" ] && [ "$pid" != "-" ]; then
+                    echo "  Killing process found via netstat on port $port (PID: $pid)"
                     kill -9 $pid 2>/dev/null || true
                   fi
                 done
               fi
             done
             
-            # Wait a moment for ports to be released
-            sleep 3
+            # Wait for ports to be fully released
+            echo "Waiting for ports to be released..."
+            sleep 5
             
-            # Verify ports are free (optional check)
-            echo "Checking if ports are free..."
+            # Final verification - check if ports are actually free
+            echo "Final port check before starting containers..."
             for port in 3000 8081 8085 9002 3003 27017 9092; do
+              port_in_use=false
+              
+              # Check with lsof
               if command -v lsof >/dev/null 2>&1; then
                 if lsof -ti:$port >/dev/null 2>&1; then
-                  echo "WARNING: Port $port is still in use"
-                else
-                  echo "Port $port is free"
+                  echo "  ERROR: Port $port is still in use (lsof)"
+                  port_in_use=true
                 fi
+              fi
+              
+              # Check with ss
+              if command -v ss >/dev/null 2>&1; then
+                if ss -lptn "sport = :$port" 2>/dev/null | grep -q ":$port"; then
+                  echo "  ERROR: Port $port is still in use (ss)"
+                  port_in_use=true
+                fi
+              fi
+              
+              # Check Docker containers
+              if docker ps --format "{{.Ports}}" 2>/dev/null | grep -qE ":$port->|0\.0\.0\.0:$port"; then
+                echo "  ERROR: Port $port is still bound to a Docker container"
+                port_in_use=true
+              fi
+              
+              if [ "$port_in_use" = false ]; then
+                echo "  Port $port is free"
+              else
+                echo "  WARNING: Port $port appears to be in use - attempting additional cleanup..."
+                # One more aggressive cleanup attempt
+                docker ps -a --format "{{.ID}}" | xargs -r docker rm -f 2>/dev/null || true
+                sleep 2
               fi
             done
             
@@ -92,5 +153,15 @@ jobs:
             docker container prune -f || true
             docker network prune -f || true
             
+            # One final check - if port 3000 is still in use, try to restart Docker service (last resort)
+            if command -v lsof >/dev/null 2>&1 && lsof -ti:3000 >/dev/null 2>&1; then
+              echo "WARNING: Port 3000 still in use after cleanup. Attempting Docker network reset..."
+              # Try to remove all unused networks
+              docker network prune -f || true
+              # Wait a bit more
+              sleep 3
+            fi
+            
             # Build and start services (mongo-express excluded by default, use --profile dev to include)
-            docker compose up -d --build
+            # Use --force-recreate to ensure fresh containers
+            docker compose up -d --build --force-recreate --remove-orphans
