@@ -42,9 +42,11 @@ services:
     networks:
       - shareprinto-network
 
-  # --- MONGO EXPRESS (optional)  ---
+  # --- MONGO EXPRESS (optional - use profile: dev)  ---
   mongo-express:
     image: mongo-express
+    profiles:
+      - dev  # Only start with: docker compose --profile dev up
     restart: unless-stopped
     ports:
       - "8084:8081"
