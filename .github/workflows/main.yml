@@ -32,11 +32,65 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/projects/shareprinto
-            # Force stop and remove all containers, networks, and volumes
+            # Stop all containers from this project
             docker compose down -v --remove-orphans || true
-            # Kill any containers that might be stuck
             docker compose kill || true
-            # Remove any dangling containers
+            
+            # Kill any containers with shareprinto in the name (in case compose down didn't catch them)
+            # Check both running and stopped containers
+            docker ps -a --filter "name=shareprinto" --format "{{.ID}}" | while read container_id; do
+              if [ ! -z "$container_id" ]; then
+                echo "Removing shareprinto container: $container_id"
+                docker rm -f $container_id 2>/dev/null || true
+              fi
+            done
+            
+            # Find and kill any containers or processes using our ports
+            for port in 3000 8081 8085 9002 3003 27017 9092; do
+              # Find all running containers and check their port mappings
+              docker ps --format "{{.ID}} {{.Ports}}" | grep -E ":$port->|0\.0\.0\.0:$port|:::$port" | awk '{print $1}' | while read container_id; do
+                if [ ! -z "$container_id" ]; then
+                  echo "Stopping container using port $port: $container_id"
+                  docker stop $container_id 2>/dev/null || true
+                  docker rm -f $container_id 2>/dev/null || true
+                fi
+              done
+              # Also check stopped containers that might have port bindings
+              docker ps -a --format "{{.ID}} {{.Ports}}" | grep -E ":$port->|0\.0\.0\.0:$port|:::$port" | awk '{print $1}' | while read container_id; do
+                if [ ! -z "$container_id" ]; then
+                  echo "Removing stopped container that used port $port: $container_id"
+                  docker rm -f $container_id 2>/dev/null || true
+                fi
+              done
+              # Also try to kill any host processes (if lsof is available)
+              if command -v lsof >/dev/null 2>&1; then
+                lsof -ti:$port 2>/dev/null | while read pid; do
+                  if [ ! -z "$pid" ]; then
+                    echo "Killing process using port $port (PID: $pid)"
+                    kill -9 $pid 2>/dev/null || true
+                  fi
+                done
+              fi
+            done
+            
+            # Wait a moment for ports to be released
+            sleep 3
+            
+            # Verify ports are free (optional check)
+            echo "Checking if ports are free..."
+            for port in 3000 8081 8085 9002 3003 27017 9092; do
+              if command -v lsof >/dev/null 2>&1; then
+                if lsof -ti:$port >/dev/null 2>&1; then
+                  echo "WARNING: Port $port is still in use"
+                else
+                  echo "Port $port is free"
+                fi
+              fi
+            done
+            
+            # Remove any dangling containers and networks
             docker container prune -f || true
+            docker network prune -f || true
+            
             # Build and start services (mongo-express excluded by default, use --profile dev to include)
             docker compose up -d --build
